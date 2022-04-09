@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://your-docusaurus-test-site.com/Garfield-blog/</id>
+    <title>Garfield's Blog Blog</title>
+    <updated>2022-04-09T20:26:00.000Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://your-docusaurus-test-site.com/Garfield-blog/"/>
+    <subtitle>Garfield's Blog Blog</subtitle>
+    <icon>https://your-docusaurus-test-site.com/Garfield-blog/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[前端开发环境配置检查清单]]></title>
+        <id>前端开发环境配置检查清单</id>
+        <link href="https://your-docusaurus-test-site.com/Garfield-blog/前端开发环境配置检查清单"/>
+        <updated>2022-04-09T20:26:00.000Z</updated>
+        <summary type="html"><![CDATA[This is my first post on Docusaurus 2.]]></summary>
+        <author>
+            <name>加菲猫</name>
+            <uri>https://github.com/Jiacheng787</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[About Me]]></title>
+        <id>about-me</id>
+        <link href="https://your-docusaurus-test-site.com/Garfield-blog/about-me"/>
+        <updated>2022-04-09T20:24:00.000Z</updated>
+        <summary type="html"><![CDATA[This is my first post on Docusaurus 2.]]></summary>
+        <content type="html"><![CDATA[<p>大家好，我是加菲猫</p>]]></content>
+        <author>
+            <name>加菲猫</name>
+            <uri>https://github.com/Jiacheng787</uri>
+        </author>
+    </entry>
+</feed>
