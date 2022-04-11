@@ -3,7 +3,7 @@ slug: js-模块规范需要注意的问题
 title: JS 模块规范需要注意的问题
 date: 2022-04-10T16:36
 authors: [garfield]
-tags: []
+tags: [ESM, CJS]
 ---
 
 <!--truncate-->
