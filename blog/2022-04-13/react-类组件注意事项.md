@@ -3,7 +3,7 @@ slug: react-类组件注意事项
 title: React 类组件注意事项
 date: 2022-04-13T21:36
 authors: [garfield]
-tags: []
+tags: [React]
 ---
 
 <!--truncate-->
