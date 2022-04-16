@@ -75,9 +75,9 @@ $ git push -f origin main
 
 :::tip
 
-**如何删除所有 commit 记录**
+一个应用场景：使用 `create-next-app` 创建了一个 nextjs 项目，并且已经推送到 GitHub 上，结果发现该项目是用 JS 创建的，想改用 TypeScript 创建
 
-初始化一个仓库：
+先删除本地仓库，重新初始化一个仓库：
 
 ```bash
 $ git init
