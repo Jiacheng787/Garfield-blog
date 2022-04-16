@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkgarfield_blog=self.webpackChunkgarfield_blog||[]).push([[605],{3536:function(a){a.exports=JSON.parse('{"allTagsPath":"/Garfield-blog/tags","name":"React","count":1,"permalink":"/Garfield-blog/tags/react"}')}}]);
