@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkgarfield_blog=self.webpackChunkgarfield_blog||[]).push([[780],{2577:function(e){e.exports=JSON.parse('{"permalink":"/Garfield-blog/tags/esm","page":1,"postsPerPage":10,"totalPages":1,"totalCount":1,"blogDescription":"Blog","blogTitle":"Blog"}')}}]);

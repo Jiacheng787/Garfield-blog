@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkgarfield_blog=self.webpackChunkgarfield_blog||[]).push([[9743],{7461:function(a){a.exports=JSON.parse('{"allTagsPath":"/Garfield-blog/tags","name":"Nginx","count":1,"permalink":"/Garfield-blog/tags/nginx"}')}}]);
