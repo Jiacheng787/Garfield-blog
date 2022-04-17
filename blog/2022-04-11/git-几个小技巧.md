@@ -38,6 +38,16 @@ $ git rebase --continue
 $ git rebase --abort
 ```
 
+:::tip
+
+如果你开发到一半，需要合入远程仓库的代码，不管你是 `git pull` 还是 `git pull --rebase`，都需要先清空本地工作区。
+
+建议避免使用 `git stash`，这样是不安全的，很容易造成代码丢失。
+
+强烈建议本地制造一些临时无用的 commit 来保证代码不会丢失。
+
+:::
+
 ## 3. Git 操作之 `git push -f`
 
 在开发一个项目的时候，本人将自己的 `feature` 分支合并到公共 `test` 分支，并且在测试环境部署成功。
@@ -99,3 +109,37 @@ $ git push -f origin main
 ```
 
 :::
+
+## 4. cherry-pick 命令
+
+有时候一个项目被拉了多个分支单独维护，一个分支上的 commit 需要同步到其他分支，可以使用 cherry-pick 命令“复制”代码。
+
+首先查看需要复制的分支对应 commit 的哈希：
+
+```bash
+$ git log --oneline feat-1
+```
+
+记下对应的 commit 的 hash 值，使用 cherry-pick 命令将这个 commit 对应的代码复制到当前分支：
+
+```bash
+$ git cherry-pick c843c37
+```
+
+cherry-pick 实际上就是将已经提交的 commit，复制出新的 commit 应用到分支里。当 cherry-pick 出现冲突，则会停下来，让用户决定如何继续操作。用户解决冲突后，需要自己 add 然后 commit。如果在代码冲突后，需要放弃或者退出流程：
+
+```bash
+$ git cherry-pick --abort
+```
+
+或者回到操作前的样子，就像什么都没发生过：
+
+```bash
+$ git cherry-pick --quit
+```
+
+## 参考
+
+[Git不要只会pull和push，试试这5条提高效率的命令](https://juejin.cn/post/7071780876501123085)
+
+[血泪教训之请不要再轻视Git —— 我在工作中是如何使用 Git 的](https://zhuanlan.zhihu.com/p/250493093)
