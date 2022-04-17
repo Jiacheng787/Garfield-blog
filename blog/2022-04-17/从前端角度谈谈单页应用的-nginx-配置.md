@@ -3,7 +3,7 @@ slug: 从前端角度谈谈单页应用的-nginx-配置
 title: 从前端角度谈谈单页应用的 nginx 配置
 date: 2022-04-17T17:08
 authors: [garfield]
-tags: []
+tags: [Nginx]
 ---
 
 <!--truncate-->
