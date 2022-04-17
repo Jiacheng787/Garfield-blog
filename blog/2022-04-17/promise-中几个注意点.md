@@ -3,7 +3,7 @@ slug: promise-中几个注意点
 title: Promise 中几个注意点
 date: 2022-04-17T12:43
 authors: [garfield]
-tags: []
+tags: [Promise]
 ---
 
 <!--truncate-->

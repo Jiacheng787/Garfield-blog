@@ -3,7 +3,7 @@ slug: ts-中几个注意点
 title: TS 中几个注意点
 date: 2022-04-17T11:27
 authors: [garfield]
-tags: []
+tags: [TypeScript]
 ---
 
 <!--truncate-->
