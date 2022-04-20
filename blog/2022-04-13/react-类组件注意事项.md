@@ -116,6 +116,27 @@ class MyCompoment extends React.Component {
 }
 ```
 
+如果不想用 Class Properties 语法，还有一种方案，把事件处理函数定义在构造方法里面：
+
+```jsx
+class MyCompoment extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleClick = () => {
+      console.log('===点击事件');
+    }
+  }
+  
+  render() {
+    return (
+      <button onClick={this.handleClick}>点击</button>
+    )
+  }
+}
+```
+
+> 能否进一步简化使用构造函数？不行，因为构造函数不能继承，如果不继承的话，`setState`、`forceUpdate` 这些方法就访问不到了，当然如果自己通过寄生组合继承的方式搞一下也不是不行
+
 ## 5. 关于 `this` 的几个注意点
 
 ### 1) 箭头函数中 `this` 指向能否改变
