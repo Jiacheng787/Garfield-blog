@@ -2,11 +2,23 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://your-docusaurus-test-site.com/Garfield-blog/</id>
     <title>Garfield's Blog Blog</title>
-    <updated>2022-04-30T21:37:00.000Z</updated>
+    <updated>2022-04-30T21:41:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://your-docusaurus-test-site.com/Garfield-blog/"/>
     <subtitle>Garfield's Blog Blog</subtitle>
     <icon>https://your-docusaurus-test-site.com/Garfield-blog/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[InnoDB原理篇：如何用好索引]]></title>
+        <id>innodb原理篇：如何用好索引</id>
+        <link href="https://your-docusaurus-test-site.com/Garfield-blog/innodb原理篇：如何用好索引"/>
+        <updated>2022-04-30T21:41:00.000Z</updated>
+        <summary type="html"><![CDATA[我们都知道 InnoDB 索引结构是 B+ 树组织的，但是根据 数据存储形式不同 可以分为两类，分别是 聚簇索引 与 二级索引。]]></summary>
+        <content type="html"><![CDATA[<p>我们都知道 InnoDB 索引结构是 B+ 树组织的，但是根据 <strong>数据存储形式不同</strong> 可以分为两类，分别是 <strong>聚簇索引</strong> 与 <strong>二级索引</strong>。</p><p>其实聚簇索引的本质就是主键索引。因为每张表只能拥有一个主键字段，所以每张表只有一个聚簇索引。另外聚簇索引还有一个特点，表的数据和主键是一起存储的，它的叶子节点存放的是整张表的行数据（树的最后一层），叶子节点又称为数据页。</p><blockquote><p>很简单记住一句话：<strong>找到了索引就找到了行数据，那么这个索引就是聚簇索引</strong></p></blockquote><p>知道了聚簇索引，再来看看二级索引是什么，简单概括，<strong>除主键索引以外的索引，都是二级索引</strong>，像我们平时建立的联合索引、前缀索引、唯一索引等。</p><p>二级索引的叶子节点存储的是索引值 + 主键 <code>id</code>。所以二级索引与聚簇索引的区别在于 <strong>叶子节点是否存放整行记录</strong>。</p><blockquote><p>也就意味着，仅仅靠二级索引无法拿到完整行数据，只能拿到 <code>id</code> 信息</p></blockquote><p>假设，我们有一个主键列为 <code>id</code> 的表，表中有字段 <code>k</code>，<code>k</code> 上有索引。</p><p>我们执行一条主键查询语句 <code>select * from T where id = 100</code>，只需要搜索 <code>id</code> 聚簇索引树就能查询整行数据。</p><p>接着再执行一条 <code>select * from T where k = 1</code>，此时要搜索 <code>k</code> 的二级索引树，具体过程如下：</p><ul><li>在 <code>k</code> 索引树上找 <code>k = 1</code> 的记录，取得 <code>id = 100</code></li><li>再到聚簇索引树查 <code>id = 100</code> 对应的行数据</li><li>回到 <code>k</code> 索引树取下一个值 <code>k = 2</code>，不满足条件，循环结束</li></ul><p>上述过程中，回到聚簇索引树搜索的过程，我们称为 <strong>回表</strong>。</p><blockquote><p>也就是说，基于二级索引的查询需要多扫描一棵聚簇索引树，因此在开发中尽量使用主键查询</p></blockquote><p>可是有时候我们确实需要使用二级索引查询，有没有办法避免回表呢？</p><p>办法是有的，但需要结合业务场景来使用，比如本次查询只返回 <code>id</code> 值，查询语句可以这样写 <code>select id from T where k = 1</code>，过程如下</p><ul><li>在 <code>k</code> 索引树上找 <code>k = 1</code> 的记录，取得 <code>id = 100</code></li><li>返回 <code>id</code> 值</li><li>回到 <code>k</code> 索引树取下一个值 <code>k = 2</code>，不满足条件，循环结束</li></ul><p>在这个查询中，索引 <code>k</code> 已经覆盖了我们的查询需求，不需要回表，这个操作称为<strong>覆盖索引</strong>。</p><blockquote><p>由于覆盖索引可以减少树的搜索次数，显著提升查询性能，所以使用覆盖索引是一个常用的性能优化手段</p></blockquote><p>假设现在有一个高频的业务场景，根据 <code>k</code> 查询，返回 <code>name</code>，我们可以把 <code>k</code> 索引变更成 <code>k</code> 与 <code>name</code> 的联合索引。</p><p><a href="https://mp.weixin.qq.com/s/yaza2iQ93BCvOW-uduS-yw" target="_blank" rel="noopener noreferrer">InnoDB原理篇：如何用好索引</a></p><p><a href="https://mp.weixin.qq.com/s?__biz=MzAwMDg2OTAxNg==&amp;mid=2652055534&amp;idx=1&amp;sn=6bce05f55b7a290a16e71d3885bfbaf0&amp;scene=21#wechat_redirect" target="_blank" rel="noopener noreferrer">InnoDB原理篇：聊聊数据页变成索引这件事</a></p>]]></content>
+        <author>
+            <name>加菲猫</name>
+            <uri>https://github.com/Jiacheng787</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[使用CRA搭建React+TS项目]]></title>
         <id>使用cra搭建react+ts项目</id>
