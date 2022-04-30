@@ -2,11 +2,23 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://your-docusaurus-test-site.com/Garfield-blog/</id>
     <title>Garfield's Blog Blog</title>
-    <updated>2022-04-30T21:31:00.000Z</updated>
+    <updated>2022-04-30T21:37:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://your-docusaurus-test-site.com/Garfield-blog/"/>
     <subtitle>Garfield's Blog Blog</subtitle>
     <icon>https://your-docusaurus-test-site.com/Garfield-blog/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[使用CRA搭建React+TS项目]]></title>
+        <id>使用cra搭建react+ts项目</id>
+        <link href="https://your-docusaurus-test-site.com/Garfield-blog/使用cra搭建react+ts项目"/>
+        <updated>2022-04-30T21:37:00.000Z</updated>
+        <summary type="html"><![CDATA[都 2022 年了，手动搭建 React 开发环境很难吗]]></summary>
+        <content type="html"><![CDATA[<p><a href="https://juejin.cn/post/7087811040591675428" target="_blank" rel="noopener noreferrer">都 2022 年了，手动搭建 React 开发环境很难吗</a></p><p><a href="https://juejin.cn/post/7039583726375796749" target="_blank" rel="noopener noreferrer">会写 TypeScript 但你真的会 TS 编译配置吗</a></p><p><a href="https://juejin.cn/post/7071066976830881823" target="_blank" rel="noopener noreferrer">用 Redux 做状态管理，真的很简单🦆</a></p><p><a href="https://juejin.cn/post/7069555976717729805" target="_blank" rel="noopener noreferrer">「React进阶」react-router v6 通关指南</a></p><p>Usage With TypeScript - Redux Toolkit</p><p><a href="https://redux-toolkit.js.org/usage/usage-with-typescript" target="_blank" rel="noopener noreferrer">https://redux-toolkit.js.org/usage/usage-with-typescript</a></p><p><a href="https://redux.js.org/introduction/why-rtk-is-redux-today" target="_blank" rel="noopener noreferrer">https://redux.js.org/introduction/why-rtk-is-redux-today</a></p>]]></content>
+        <author>
+            <name>加菲猫</name>
+            <uri>https://github.com/Jiacheng787</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[手写Promise源码]]></title>
         <id>手写promise源码</id>

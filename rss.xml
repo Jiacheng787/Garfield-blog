@@ -4,10 +4,18 @@
         <title>Garfield's Blog Blog</title>
         <link>https://your-docusaurus-test-site.com/Garfield-blog/</link>
         <description>Garfield's Blog Blog</description>
-        <lastBuildDate>Sat, 30 Apr 2022 21:31:00 GMT</lastBuildDate>
+        <lastBuildDate>Sat, 30 Apr 2022 21:37:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[使用CRA搭建React+TS项目]]></title>
+            <link>https://your-docusaurus-test-site.com/Garfield-blog/使用cra搭建react+ts项目</link>
+            <guid>使用cra搭建react+ts项目</guid>
+            <pubDate>Sat, 30 Apr 2022 21:37:00 GMT</pubDate>
+            <description><![CDATA[都 2022 年了，手动搭建 React 开发环境很难吗]]></description>
+            <content:encoded><![CDATA[<p><a href="https://juejin.cn/post/7087811040591675428" target="_blank" rel="noopener noreferrer">都 2022 年了，手动搭建 React 开发环境很难吗</a></p><p><a href="https://juejin.cn/post/7039583726375796749" target="_blank" rel="noopener noreferrer">会写 TypeScript 但你真的会 TS 编译配置吗</a></p><p><a href="https://juejin.cn/post/7071066976830881823" target="_blank" rel="noopener noreferrer">用 Redux 做状态管理，真的很简单🦆</a></p><p><a href="https://juejin.cn/post/7069555976717729805" target="_blank" rel="noopener noreferrer">「React进阶」react-router v6 通关指南</a></p><p>Usage With TypeScript - Redux Toolkit</p><p><a href="https://redux-toolkit.js.org/usage/usage-with-typescript" target="_blank" rel="noopener noreferrer">https://redux-toolkit.js.org/usage/usage-with-typescript</a></p><p><a href="https://redux.js.org/introduction/why-rtk-is-redux-today" target="_blank" rel="noopener noreferrer">https://redux.js.org/introduction/why-rtk-is-redux-today</a></p>]]></content:encoded>
+        </item>
         <item>
             <title><![CDATA[手写Promise源码]]></title>
             <link>https://your-docusaurus-test-site.com/Garfield-blog/手写promise源码</link>
