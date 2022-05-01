@@ -24,6 +24,18 @@ tags: []
 
 React 18 使用了新的 `ReactDOM.createRoot()` API 挂载根节点，Concurrent Mode 需要通过此 API 开启，但是 antd 中的 message 等组件内部仍使用 `ReactDOM.render()` 挂载根节点，此时在控制台会打印警告，注意这并不是报错，仅仅只是 fallback 到 legacy mode 而已。
 
+Antd 最近发布了 4.20.0 版本，增加了对 React18 的支持：
+
+:::tip
+
+🔥 React 18 Support
+- 🐞 Fix Form with React 18 StrictMode missing error message update. #35096
+- 🐞 Fix Notification and Message throw createRoot warning in React 18. #35030
+- 🐞 Fix BackTop not working in StrictMode. #34858 @tmkx
+
+:::
+
+> https://github.com/ant-design/ant-design/releases/tag/4.20.0
 
 ## 3. React 18 不支持 IE ？
 
