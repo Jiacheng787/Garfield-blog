@@ -4,10 +4,18 @@
         <title>Garfield's Blog Blog</title>
         <link>https://your-docusaurus-test-site.com/Garfield-blog/</link>
         <description>Garfield's Blog Blog</description>
-        <lastBuildDate>Sat, 30 Apr 2022 21:41:00 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 01 May 2022 22:07:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[安装Ubuntu 22.04 LTS遇到的问题]]></title>
+            <link>https://your-docusaurus-test-site.com/Garfield-blog/安装ubuntu-22.04-lts遇到的问题</link>
+            <guid>安装ubuntu-22.04-lts遇到的问题</guid>
+            <pubDate>Sun, 01 May 2022 22:07:00 GMT</pubDate>
+            <description><![CDATA[Ubuntu 22.04 LTS 已于近日发布（April 22, 2022），推特上看已经有大佬用上了，本人也迫不及待尝试了一下，安装遇到的问题汇总如下。]]></description>
+            <content:encoded><![CDATA[<p>Ubuntu 22.04 LTS 已于近日发布（April 22, 2022），推特上看已经有大佬用上了，本人也迫不及待尝试了一下，安装遇到的问题汇总如下。</p><h2 class="anchor anchorWithStickyNavbar_mojV" id="1-如何制作启动盘">1. 如何制作启动盘<a class="hash-link" href="#1-如何制作启动盘" title="Direct link to heading">​</a></h2><p>在 Ubuntu 系统上提供了一个工具 Startup Disk Creator，可以用于制作启动盘，但本人的系统是 MacOS，需要下载一个工具：</p><blockquote><p><a href="https://www.balena.io/etcher/" target="_blank" rel="noopener noreferrer">https://www.balena.io/etcher/</a></p></blockquote><p>下载之后，按提示操作即可制作启动盘。</p><h2 class="anchor anchorWithStickyNavbar_mojV" id="2-解决-grub-install-报错的问题">2. 解决 grub-install 报错的问题<a class="hash-link" href="#2-解决-grub-install-报错的问题" title="Direct link to heading">​</a></h2><p>每次安装快完成的时候，总是会报一个错误：</p><blockquote><p>Executing 'grub-install /dev/sda' failed. This is a fatal error.</p></blockquote><p>这时候系统可以正常进去，可以正常使用，但是由于引导文件写入失败，一旦重启就无法正常进入系统。</p><p>这种情况下需要手动设置磁盘分区。默认情况下有两个分区，一个是 EFI 系统分区（500M 左右），另一个是 EXT4 分区（直接分配剩余空间）。</p><blockquote><p>注意必须要有一个 EFI 系统分区，否则系统无法正常挂载。另外建议设置 swap 交换区，大小与 RAM 相当</p></blockquote><p>参考了一些网上的解决方案，发现都行不通。最后本人自己设置了 4 个分区，配置如下：</p><ul><li>swap 交换区，大小 4000MB</li><li>EFI 系统分区，大小 20GB，挂载点为 /</li><li>EXT4 分区，用于存储用户文件，分配所有剩余空间，挂载点为 /home</li><li>boot 分区，大小为 500MB</li></ul><p>最后安装成功，没有报错了。分析引导文件写入失败主要应该是下面两个原因之一：</p><ul><li>默认的 EFI 系统分区太小了</li><li>没有设置 boot 分区</li></ul><h2 class="anchor anchorWithStickyNavbar_mojV" id="参考">参考<a class="hash-link" href="#参考" title="Direct link to heading">​</a></h2><p><a href="https://phoenixnap.com/kb/ubuntu-22-04-lts" target="_blank" rel="noopener noreferrer">How to Install Ubuntu 22.04 LTS Desktop (Jammy Jellyfish)</a></p>]]></content:encoded>
+        </item>
         <item>
             <title><![CDATA[InnoDB原理篇：如何用好索引]]></title>
             <link>https://your-docusaurus-test-site.com/Garfield-blog/innodb原理篇：如何用好索引</link>
