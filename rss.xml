@@ -4,10 +4,18 @@
         <title>Garfield's Blog Blog</title>
         <link>https://your-docusaurus-test-site.com/Garfield-blog/</link>
         <description>Garfield's Blog Blog</description>
-        <lastBuildDate>Sun, 01 May 2022 22:07:00 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 01 May 2022 23:10:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[编译TS代码用TSC还是Babel]]></title>
+            <link>https://your-docusaurus-test-site.com/Garfield-blog/编译ts代码用tsc还是babel</link>
+            <guid>编译ts代码用tsc还是babel</guid>
+            <pubDate>Sun, 01 May 2022 23:10:00 GMT</pubDate>
+            <description><![CDATA[编译 ts 代码用 tsc 还是 babel]]></description>
+            <content:encoded><![CDATA[<p><a href="https://juejin.cn/post/7084882650233569317" target="_blank" rel="noopener noreferrer">编译 ts 代码用 tsc 还是 babel</a></p>]]></content:encoded>
+        </item>
         <item>
             <title><![CDATA[安装Ubuntu 22.04 LTS遇到的问题]]></title>
             <link>https://your-docusaurus-test-site.com/Garfield-blog/安装ubuntu-22.04-lts遇到的问题</link>
