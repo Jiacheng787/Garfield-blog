@@ -142,6 +142,14 @@ function MyApp() {
 }
 ```
 
+:::tip
+
+`useRef` 和 `useCallback` 的区别
+
+`useRef` 和 `useCallback` 都可以将值缓存到 Fiber 节点的 `memorizedState` 链表上，只不过 `useCallback` 还可以接受一个依赖项数组，每次 rerender 的时候比较依赖项，决定使用缓存还是新的值，而 `useRef` 则缓存一个不可变引用，每次 rerender 的时候始终返回缓存的值。
+
+:::
+
 ## useMemo 相关
 
 `useMemo` 类似 Vue 中的计算属性，当依赖项发生变化，会重新计算。但实际上 `useMemo` 比计算属性更强大，除了缓存值之外，还能缓存组件：
@@ -160,3 +168,6 @@ function Index({ value }){
 }
 ```
 
+## 自定义 hook 相关
+
+编写自定义 hook 注意事项，函数组件每次 rerender 的时候，实际上就是执行整个函数，函数内部的变量会重新创建、hooks 会重新执行，因此自定义 hook 内部需要对逻辑进行缓存（例如 `useEffect`、`useMemo`、`useCallback`、`useRef`），避免重复执行。
