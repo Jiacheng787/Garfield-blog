@@ -4,10 +4,18 @@
         <title>Garfield's Blog Blog</title>
         <link>https://your-docusaurus-test-site.com/Garfield-blog/</link>
         <description>Garfield's Blog Blog</description>
-        <lastBuildDate>Mon, 02 May 2022 19:33:00 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 03 May 2022 17:05:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[理解SOLID原则]]></title>
+            <link>https://your-docusaurus-test-site.com/Garfield-blog/理解solid原则</link>
+            <guid>理解solid原则</guid>
+            <pubDate>Tue, 03 May 2022 17:05:00 GMT</pubDate>
+            <description><![CDATA[基于 TypeScript 理解程序设计的 SOLID 原则]]></description>
+            <content:encoded><![CDATA[<p><a href="https://mp.weixin.qq.com/s/mz5S1iiRWkk-KKJg5lOOJQ" target="_blank" rel="noopener noreferrer">基于 TypeScript 理解程序设计的 SOLID 原则</a></p><p><a href="https://mp.weixin.qq.com/s/KHeo5bdY4cjPfA5I1mjXWw" target="_blank" rel="noopener noreferrer">【第2126期】每个开发者都应该知道的 SOLID 原则</a></p><p><a href="https://mp.weixin.qq.com/s/vg-a7AXTMzVpr-hgim6xNg" target="_blank" rel="noopener noreferrer">【第2584期】JavaScript 中的 SOLID 原则：“S”代表什么</a></p><p><a href="https://mp.weixin.qq.com/s/NToXFDrsfk7fNsiHc1mxzg" target="_blank" rel="noopener noreferrer">【第2586期】JavaScript 中的 SOLID 原则：“O”代表什么</a></p><p><a href="https://mp.weixin.qq.com/s/renez4GVSC4Bo7VdFBK1VA" target="_blank" rel="noopener noreferrer">【第2589期】JavaScript 中的 SOLID 原则：“L”代表什么</a></p><p><a href="https://mp.weixin.qq.com/s/fURljenEPZLopgVNyWbXdQ" target="_blank" rel="noopener noreferrer">【第2591期】JavaScript 中的 SOLID 原则：“I”代表什么</a></p><p><a href="https://mp.weixin.qq.com/s/TsmnBQ0H5UG15pSuunXFEg" target="_blank" rel="noopener noreferrer">【第2592期】JavaScript 中的 SOLID 原则：“D”代表什么</a></p>]]></content:encoded>
+        </item>
         <item>
             <title><![CDATA[如何实现useClickOutside]]></title>
             <link>https://your-docusaurus-test-site.com/Garfield-blog/如何实现useclickoutside</link>
