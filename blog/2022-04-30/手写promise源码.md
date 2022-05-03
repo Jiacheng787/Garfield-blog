@@ -8,6 +8,8 @@ tags: []
 
 <!--truncate-->
 
+[这篇手写 Promise 你一定要康康](https://juejin.cn/post/7085298532365631501)
+
 [百行代码带你实现通过872条Promise/A+用例的Promise](https://juejin.cn/post/7065693195799265287)
 
 [深入理解 Promise 之手把手教你写一版](https://mp.weixin.qq.com/s/_gDIO6YCswAS2dICllMG0A)
