@@ -61,8 +61,8 @@
             <link>https://your-docusaurus-test-site.com/Garfield-blog/手写promise源码</link>
             <guid>手写promise源码</guid>
             <pubDate>Sat, 30 Apr 2022 21:31:00 GMT</pubDate>
-            <description><![CDATA[百行代码带你实现通过872条Promise/A+用例的Promise]]></description>
-            <content:encoded><![CDATA[<p><a href="https://juejin.cn/post/7065693195799265287" target="_blank" rel="noopener noreferrer">百行代码带你实现通过872条Promise/A+用例的Promise</a></p><p><a href="https://mp.weixin.qq.com/s/_gDIO6YCswAS2dICllMG0A" target="_blank" rel="noopener noreferrer">深入理解 Promise 之手把手教你写一版</a></p>]]></content:encoded>
+            <description><![CDATA[这篇手写 Promise 你一定要康康]]></description>
+            <content:encoded><![CDATA[<p><a href="https://juejin.cn/post/7085298532365631501" target="_blank" rel="noopener noreferrer">这篇手写 Promise 你一定要康康</a></p><p><a href="https://juejin.cn/post/7065693195799265287" target="_blank" rel="noopener noreferrer">百行代码带你实现通过872条Promise/A+用例的Promise</a></p><p><a href="https://mp.weixin.qq.com/s/_gDIO6YCswAS2dICllMG0A" target="_blank" rel="noopener noreferrer">深入理解 Promise 之手把手教你写一版</a></p>]]></content:encoded>
         </item>
         <item>
             <title><![CDATA[CORS为什么能保障安全]]></title>
