@@ -67,10 +67,28 @@ exports = module.exports = {};
 CommonJS 导出的是 `module.exports` 指针指向的对象：
 
 ```js
-function loadModule(require, module, exports) {
-  exports.a = 3;
-  module.exports = { b: 4 };
+var __webpack_modules__ = {
+  "./src/index.js": (module, exports, require) => {
+    exports.a = 3;
+    module.exports = { b: 4 };
 
+    return module.exports;
+  },
+};
+
+// 简单实现一个 require 函数
+function __webpack_require__(moduleId) {
+  var module  = {
+    exports: {},
+  });
+
+  __webpack_modules__[moduleId](
+    module,
+    module.exports,
+    __webpack_require__
+  );
+
+  // require 函数最终返回 module.exports 指针指向的对象
   return module.exports;
 }
 ```
