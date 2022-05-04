@@ -37,7 +37,7 @@
         <link href="https://your-docusaurus-test-site.com/Garfield-blog/前端包管理器简史,npm-为什么会慢"/>
         <updated>2022-05-01T23:28:00.000Z</updated>
         <summary type="html"><![CDATA[This is my first post on Docusaurus 2.]]></summary>
-        <content type="html"><![CDATA[<p><a href="https://zhuanlan.zhihu.com/p/455809528" target="_blank" rel="noopener noreferrer">深入浅出 tnpm rapid 模式 - 如何比 pnpm 快 10 秒</a></p><p><a href="https://mp.weixin.qq.com/s/grb2OlBYiwU3TOkEtNZReA" target="_blank" rel="noopener noreferrer">pnpm 源码结构及调试指南</a></p><p><a href="https://mp.weixin.qq.com/s/0Nx093GdMcYo5Mr5VRFDjw" target="_blank" rel="noopener noreferrer">【第2506期】JavaScript 包管理器简史（npm/yarn/pnpm）</a></p><p>第三方库如何解决间接依赖不可控问题</p><p><a href="https://juejin.cn/post/7031122959637217310" target="_blank" rel="noopener noreferrer">如果没有 package-lock.json，那将如何</a></p><p>第三方库如何解决依赖重复安装问题</p><p><a href="https://juejin.cn/post/7030084290989948935s" target="_blank" rel="noopener noreferrer">工程化知识卡片 023：node_modules 版本重复的困境</a></p>]]></content>
+        <content type="html"><![CDATA[<p><a href="https://zhuanlan.zhihu.com/p/455809528" target="_blank" rel="noopener noreferrer">深入浅出 tnpm rapid 模式 - 如何比 pnpm 快 10 秒</a></p><p><a href="https://mp.weixin.qq.com/s/grb2OlBYiwU3TOkEtNZReA" target="_blank" rel="noopener noreferrer">pnpm 源码结构及调试指南</a></p><p><a href="https://mp.weixin.qq.com/s/0Nx093GdMcYo5Mr5VRFDjw" target="_blank" rel="noopener noreferrer">【第2506期】JavaScript 包管理器简史（npm/yarn/pnpm）</a></p>]]></content>
         <author>
             <name>加菲猫</name>
             <uri>https://github.com/Jiacheng787</uri>
