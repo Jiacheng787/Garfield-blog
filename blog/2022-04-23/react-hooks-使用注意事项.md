@@ -123,6 +123,42 @@ const App: React.FC<{}> = () => {
 }
 ```
 
+对于一些表单 UI，如果要实现受控组件，通常与 `useState` 进行绑定：
+
+```tsx
+const App: React.FC<{}> = () => {
+  const [num, setNum] = React.useState(1);
+
+  return (
+    <InputNumber value={num} onChange={setNum} />
+  )
+}
+```
+
+在 Vue 项目中，涉及到表单 UI，一般都是直接全部进行数据绑定，但是在 React 中并不一定都要数据绑定：
+
+```tsx
+const App: React.FC<{}> = () => {
+  // 如果使用 useState 进行数据绑定，在输入的时候，会导致组件频繁 rerender
+  // 如果组件渲染比较昂贵，使用 useRef 则可以避免 rerender
+  const inputRef = React.useRef("");
+
+  const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
+    inputRef.current = e.target.value;
+  }
+
+  return (
+    <Input onChange={handleInputChange} />
+  )
+}
+```
+
+:::tip
+
+需不需要受控组件，还是要看场景，如果仅仅只需要在提交的时候获取表单内容，完全可以不用受控；如果表单输入要实时反映 UI 变化（例如字数统计、合法性校验等），则最好做成受控组件
+
+:::
+
 在父组件定义的事件处理函数，需要作为 prop 传入子组件。如果父组件重新渲染，会导致函数重新生成，相当于 prop 发生变化，即使子组件内部使用 `React.memo()` 包裹也会导致重新渲染。常规做法是使用 `React.useCallback()` 包裹事件处理函数，但实际上用 `React.useRef()` 包裹也是可以的，都是把事件处理函数缓存到 Fiber 节点上。
 
 ```jsx
@@ -152,7 +188,59 @@ function MyApp() {
 
 ## useMemo 相关
 
-`useMemo` 类似 Vue 中的计算属性，当依赖项发生变化，会重新计算。但实际上 `useMemo` 比计算属性更强大，除了缓存值之外，还能缓存组件：
+`useMemo` 类似 Vue 中的计算属性，当依赖项发生变化，会重新计算。
+
+例如下面是一个常见的需求，有一个列表，切换下拉框选项可以调接口更新列表，在搜索框输入内容可以搜索当前列表的内容。
+
+```tsx
+const List: React.FC<{}> = () => {
+  const { tableData } = useSelector(state => state.tableData);
+  const dispatch = useDispatch<AppDispatch>();
+
+  const [searchText, setSearchText] = React.useState("");
+
+  // 将 useMemo 作为计算属性，添加 tableData 和 searchText 两个依赖项
+  const dataSource = React.useMemo(() => {
+    return tableData.filter(item => item.name.includes(searchText));
+  }, [tableData, searchText]);
+
+  // 当切换下拉框选项时，触发 handleSelectChange
+  // 调接口更新 store 的值
+  // 注意组件中使用 useSelector 做了 UI-binding
+  // 因此 tableData 改变会触发组件更新
+  // 由于 tableData 被添加到 useMemo 依赖项中
+  // 因此 useMemo 会重新计算 dataSource
+  // 进而实现切换下拉框更新列表的功能
+  const handleSelectChange = (value: string) => {
+    dispatch(setTableDataAction(value));
+  }
+
+  // 当搜索框输入内容时，触发 handleInputChange
+  // 由于 searchText 被添加到 useMemo 依赖项中
+  // 因此 searchText 改变会触发 useMemo 重新计算
+  // 进而实现搜索当前列表功能
+  const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
+  }
+
+  return (
+    <div>
+      <div>
+        <Select onChange={handleSelectChange}>
+          <Option value="lucy">Lucy</Option>
+        </Select>
+        <Input onChange={handleInputChange} />
+      </div>
+      <Table
+        columns={columns}
+        dataSource={dataSource}
+      />
+    </div>
+  )
+}
+```
+
+但实际上 `useMemo` 比计算属性更强大，除了缓存值之外，还能缓存组件：
 
 ```jsx
 function Index({ value }){
