@@ -26,9 +26,25 @@ const [count, setCount] = React.useState(() => ExpensiveCal());
 ```jsx
 const [count, setCount] = React.useState(0);
 
-// 下面这样虽然调用了两次
-// 但由于一次渲染中获取的 count 都是闭包中老的值
-// 因此最终 count 还是 1
+/**
+ * 下面这样虽然调用了两次
+ * 但是 React 会对状态更新进行批处理
+ * 保证连续调用 setCount，状态只更新一次
+ * 防止组件频繁 rerender
+ * 
+ * 调用 setCount 之后并不会立即更新 count
+ * 所以第二次 setCount 的时候，count 值仍然是 0
+ * 
+ * 例如：
+ * setCount(count + 1);
+ * console.log(count); // 0
+ * 
+ * 所以下面的代码等价于：
+ * setCount(0 + 1);
+ * setCount(0 + 1);
+ * 
+ * 因此最终 count 还是 1
+ */
 setCount(count + 1);
 setCount(count + 1);
 
