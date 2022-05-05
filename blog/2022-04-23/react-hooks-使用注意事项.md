@@ -88,6 +88,18 @@ const LineChart = (props) => {
 export default React.memo(LineChart);
 ```
 
+`useEffect` 可以实现类似监听的效果，具体流程如下：
+
+- 调用 `setState` 更新状态，同时触发调度更新
+- 组件 rerender，所有 hooks 重新执行（包括 `useEffect`）
+- `updateEffectImpl` 内部对 deps 进行比较，发现依赖性变化，于是执行 `create` 函数
+
+:::tip
+
+注意，很多同学习惯性把 `useEffect` 理解为监听，例如 _用 `useEffect` 监听某个 state 变量_，这种理解是不对的。为什么这么说呢，因为 `useEffect` 实际上只能监听 state 变量，只有 `setState` 可以触发调度更新，进而重新执行函数组件，重新执行 `useEffect`，实现监听效果；但是如果换做 ref 是无法监听的，因为修改 ref 不能触发调度更新。因此还是要从实现原理的角度去理解整个调用链路。
+
+:::
+
 ## useCallback 相关
 
 `React.useCallback` 需要配合 `React.memo` 使用，其中任意一个单独使用是没用的。
