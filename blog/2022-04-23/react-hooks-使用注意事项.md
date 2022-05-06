@@ -220,20 +220,38 @@ const App: React.FC<{}> = () => {
 
 :::
 
-在父组件定义的事件处理函数，需要作为 prop 传入子组件。如果父组件重新渲染，会导致函数重新生成，相当于 prop 发生变化，即使子组件内部使用 `React.memo()` 包裹也会导致重新渲染。常规做法是使用 `React.useCallback()` 包裹事件处理函数，但实际上用 `React.useRef()` 包裹也是可以的，都是把事件处理函数缓存到 Fiber 节点上。
+在父组件定义的事件处理函数，需要作为 prop 传入子组件。如果父组件重新渲染，会导致函数重新生成，相当于 prop 发生变化，即使子组件内部使用 `React.memo()` 包裹也会导致重新渲染。常规做法是使用 `React.useCallback()` 包裹事件处理函数，有同学会问，用 `React.useRef()` 包裹可以吗？`useRef` 确实也可以把事件处理函数缓存到 fiber 节点上，但不建议这么做，因为即使 state 变量更新，`useRef` 仍然返回缓存的函数，不会用新生成的函数替换，导致闭包陷阱：
 
 ```jsx
 function MyApp() {
+  const [count, setCount] = React.useState(0);
+
+  /**
+   * 使用 useCallback 缓存函数
+   * 这里注意，如果函数内部依赖了 state 变量
+   * 又没有添加到依赖项数组中
+   * 会导致闭包陷阱，无法获取到最新的值
+   */
+  const handleClick = React.useCallback(() => {
+    console.log(count);
+  }, [count]);
+
+  /**
+   * useRef(fn) 实际上就相当于 useCallback(fn, [])
+   * 始终调用 fiber 节点缓存的函数
+   * 因此如果函数内部依赖了 state 变量
+   * 则必然导致闭包陷阱
+   * 因此不推荐用 useRef 缓存函数
+   * 除非你能在每次 rerender 的时候更新 current
+   */
   const onClickRef = React.useRef(() => {
-    console.log("666");
+    console.log(count);
   });
 
-  // const onClick = React.useCallback(() => {}, []);
-  
   return (
     <div>
       <h1>Welcome to my app</h1>
-      <MyButton onClick={onClickRef.current} />
+      <MyButton onClick={handleClick} />
     </div>
   );
 }
@@ -243,7 +261,7 @@ function MyApp() {
 
 `useRef` 和 `useCallback` 的区别
 
-`useRef` 和 `useCallback` 都可以将值缓存到 Fiber 节点的 `memorizedState` 链表上，只不过 `useCallback` 还可以接受一个依赖项数组，每次 rerender 的时候比较依赖项，决定使用缓存还是新的值，而 `useRef` 则缓存一个不可变引用，每次 rerender 的时候始终返回缓存的值。
+`useRef` 和 `useCallback` 都可以将值缓存到 Fiber 节点的 `memorizedState` 链表上，只不过 `useCallback` 还可以接受一个依赖项数组，每次 rerender 的时候比较依赖项，如果依赖项改变，则用重新生成的函数替换 Fiber 节点缓存的值，使得函数内部可以访问到最新的值，而 `useRef` 则缓存一个不可变引用，每次 rerender 的时候始终返回缓存的值。
 
 :::
 
@@ -320,3 +338,11 @@ function Index({ value }){
 ## 自定义 hook 相关
 
 编写自定义 hook 注意事项，函数组件每次 rerender 的时候，实际上就是执行整个函数，函数内部的变量会重新创建、hooks 会重新执行，因此自定义 hook 内部需要对逻辑进行缓存（例如 `useEffect`、`useMemo`、`useCallback`、`useRef`），避免重复执行。
+
+## forwardRef && useImperativeHandle
+
+函数组件的 `ref` 属性只能用在 dom 元素上，不能用在组件上，因为函数组件没有实例，所以函数组件无法像类组件一样可以接收 `ref` 属性。
+
+`forwardRef` 可以将父组件中的 `ref` 对象转发到子组件中的 dom 元素上，从而在父组件获取子组件的 ref 对象。此时，子组件接受 props 和 ref 作为参数。
+
+在大多数情况下，应当避免使用 `ref` 这样的命令式代码。`useImperativeHandle` 可以让你在使用 `ref` 时，自定义暴露给父组件的实例值，不能让父组件想干嘛就干嘛。此外父组件可以使用操作子组件中的多个 `ref`。建议 `useImperativeHandle` 应当与 `forwardRef` 一起使用。
