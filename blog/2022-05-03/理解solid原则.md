@@ -21,3 +21,5 @@ tags: []
 [【第2591期】JavaScript 中的 SOLID 原则：“I”代表什么](https://mp.weixin.qq.com/s/fURljenEPZLopgVNyWbXdQ)
 
 [【第2592期】JavaScript 中的 SOLID 原则：“D”代表什么](https://mp.weixin.qq.com/s/TsmnBQ0H5UG15pSuunXFEg)
+
+[【第2609期】Javascript之迪米特法则](https://mp.weixin.qq.com/s/fhSMz8BEIyjFGVnJtcVrKg)
