@@ -56,6 +56,14 @@ setCount(c => c + 1);
 
 ## useEffect 相关
 
+:::tip
+
+`useEffect` 与 `useLayoutEffect` 的区别：
+
+`useLayoutEffect` 在 **组件渲染前同步执行**，`useEffect` 在 **组件渲染后异步执行**。
+
+:::
+
 `useEffect` 清除副作用：
 
 ```jsx
