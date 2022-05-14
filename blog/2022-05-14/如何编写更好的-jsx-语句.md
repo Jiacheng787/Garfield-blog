@@ -21,6 +21,12 @@ data.length > 0 && jsx
 Boolean(data.length) && jsx
 ```
 
+:::tip
+
+从这里可以看出，`false`、`null`、`[]` 这些值不会被渲染出来，但是 `0` 会被渲染出来，所以在处理列表渲染的时候需要特别注意。
+
+:::
+
 不要使用 `props` 传递的 React 元素作为判断条件:
 
 ```jsx
@@ -37,6 +43,12 @@ const Wrap = (props) => {
   return <div>{props.children}</div>
 };
 ```
+
+:::tip
+
+`React.Children` 提供了用于处理 `this.props.children` 不透明数据结构的实用方法。
+
+:::
 
 重新挂载还是更新：
 
