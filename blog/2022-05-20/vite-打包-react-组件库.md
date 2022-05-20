@@ -2,7 +2,6 @@
 slug: vite-打包-react-组件库
 title: Vite 打包 React 组件库
 date: 2022-05-20T21:43
-description: This is my first post on Docusaurus 2.
 authors: [garfield]
 tags: []
 ---
