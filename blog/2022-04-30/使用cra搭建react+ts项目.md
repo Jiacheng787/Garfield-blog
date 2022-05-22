@@ -195,6 +195,42 @@ const App: React.FC<{}> = () => {
 export default App;
 ```
 
+## 解决 CRA 项目在 CI 环境因 ESLint 报错导致打包失败的问题
+
+CRA 内部使用 `ESLint Plugin` 进行代码检查，而非命令的方式。当 ESLint 存在问题时，CRA 如果判断当前是 CI 环境，则直接报错并退出进程，导致打包失败：
+
+```js title="packages/react-scripts/config/webpack.config.js"
+const emitErrorsAsWarnings = process.env.ESLINT_NO_DEV_ERRORS === 'true';
+const disableESLintPlugin = process.env.DISABLE_ESLINT_PLUGIN === 'true';
+
+module.exports = {
+  plugins: [
+    !disableESLintPlugin &&
+      new ESLintPlugin({
+        // Plugin options
+        // ...
+        failOnError: !(isEnvDevelopment && emitErrorsAsWarnings),
+      })
+  ]
+}
+```
+
+:::tip
+
+从源码中可以看出，在开发环境下可以通过配置 `emitErrorsAsWarnings` 关闭报错，只打印日志。但是在 CI 环境中，由于 `isEnvDevelopment` 已经为 `false`，此时不管第二个参数怎么配置，最终结果都是 ESLint 报错时退出进程，导致打包失败。
+
+这里补充一下，为什么 CRA 使用 CI 检查，而不是 Git Hook（例如 husky）的方式检查。它们的最大的区别在于一个是服务端检查，一个是客户端检查。而客户端检查是天生不可信任的。对于 `git hooks` 而言，很容易通过 `git commit --no-verify` 而跳过。相比之下，CI 检查是无法绕过的，最重要的是，CI 还可对部署及其后的一系列操作进行检查，如端对端测试、性能测试等。
+
+:::
+
+解决 CI 环境下 ESLint 报错导致打包失败，最简单的办法就是在生产环境下禁用 ESLint：
+
+```bash title=".env.production"
+DISABLE_ESLINT_PLUGIN=true
+```
+
+> 当然更合理的做法应该是在开发环境下就启用严格的 ESLint 检查，确保提交的代码都是符合规范的
+
 ## 参考
 
 [都 2022 年了，手动搭建 React 开发环境很难吗](https://juejin.cn/post/7087811040591675428)
