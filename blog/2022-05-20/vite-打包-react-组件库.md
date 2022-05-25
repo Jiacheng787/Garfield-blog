@@ -11,7 +11,7 @@ tags: []
 ## 为什么用 Vite 打包 React 组件库
 
 - 生产环境 rollup 打包 + 开发环境 devServer
-- 开发环境可以通过 `@vitejs/plugin-react` 插件支持 fast-refresh
+- 官方提供 `@vitejs/plugin-react` 插件，支持开发环境 fast-refresh，支持类组件 Class Properties 语法转换
 - 生产环境默认使用 esbuild 代码压缩，效率是 terser 的 20-40 倍
 - esbuild 在语法转换这块尚不完善，但是组件库打包不用考虑兼容性问题，兼容性问题交给业务项目解决
 - Vite 提供了很多 esbuild 尚不支持的特性（例如 CSS 模块化等）
