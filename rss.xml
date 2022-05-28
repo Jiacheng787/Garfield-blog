@@ -4,10 +4,18 @@
         <title>Garfield's Blog Blog</title>
         <link>https://your-docusaurus-test-site.com/Garfield-blog/</link>
         <description>Garfield's Blog Blog</description>
-        <lastBuildDate>Fri, 20 May 2022 21:43:00 GMT</lastBuildDate>
+        <lastBuildDate>Sat, 28 May 2022 20:02:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Tree Shaking 问题排查指南]]></title>
+            <link>https://your-docusaurus-test-site.com/Garfield-blog/tree-shaking-问题排查指南</link>
+            <guid>tree-shaking-问题排查指南</guid>
+            <pubDate>Sat, 28 May 2022 20:02:00 GMT</pubDate>
+            <description><![CDATA[Tree shaking在不同工具里的意义不太统一，为了统一后续讨论，我们规范各个术语：]]></description>
+            <content:encoded><![CDATA[<p>Tree shaking在不同工具里的意义不太统一，为了统一后续讨论，我们规范各个术语：</p><ul><li>minify：编译优化手段，指在不影响代码语义的情况下，尽可能的减小程序的体积，常见的 minify 工具如 terser、uglify，swc 和 esbuid 也自带 minify 功能</li><li>Dead code elimination(DCE)：即死代码优化，一种编译器优化手段，用于移除不影响程序结果的代码，实现DCE的手段有很多种，如 const folding (常量折叠)、Control flow analysis、也包括下面的 LTO</li><li>Link Time Optimization：指 link 期优化的手段，可以进行跨模块的分析优化，如可以分析模块之间的引用关系，删掉其他模块未使用的导出变量，也可以进行跨模块对符号进行 mangle <a href="http://johanengelen.github.io/ldc/2016/11/10/Link-Time-Optimization-LDC.html" target="_blank" rel="noopener noreferrer">http://johanengelen.github.io/ldc/2016/11/10/Link-Time-Optimization-LDC.html</a></li><li>Tree shaking：一种在 Javascript 社区流行的一个术语，是一种死代码优化手段，其依赖于 ES2015 的模块语法，由 rollup 引入。这里的 tree shaking 通常指的是基于 module 的跨模块死代码删除技术，即基于 LTO 的 DCE，其区别于一般的 DCE 在于，其只进行 top-level 和跨模块引用分析，并不会去尝试优化如函数里的实现的 DCE</li></ul><blockquote><p>Tree shaking is a term commonly used in the JavaScript context for dead-code elimination. It relies on the static structure of ES2015 module syntax, i.e. import and export. The name and concept have been popularized by the ES2015 module bundler rollup.   </p><p><a href="https://webpack.js.org/guides/tree-shaking/" target="_blank" rel="noopener noreferrer">https://webpack.js.org/guides/tree-shaking/</a></p></blockquote><ul><li>mangle：即符号压缩，将变量名以更短的变量名进行替换</li><li>副作用：对程序状态造成影响，死代码优化一般不能删除副作用代码，即使副作用代码的结果在其他地方没用到</li><li>模块内部副作用：副作用影响范围仅限于当前模块，如果外部模块不依赖当前模块，那么该副作用代码可以跟随当前模块一起被删除，如果外部模块依赖了当前模块，则该副作用代码不能被删除</li></ul><p><img loading="lazy" alt="image" src="/Garfield-blog/assets/images/tree_shaking-19829ee33097b669151380439207d188.png" width="654" height="573" class="img_E7b_"></p><p>因此我们的后续讨论，所说的 tree shaking 均是指基于 LTO 的 DCE，而 DCE 指的是不包含 tree shaking 的其他 DCE 部分。</p><blockquote><p>简单来说即是，tree shaking 负责移除未引用的 top-level 语句，而 DCE 删除无用的语句</p></blockquote><p><a href="https://mp.weixin.qq.com/s/P3mzw_vmOR6K_Mj-963o3g" target="_blank" rel="noopener noreferrer">Tree shaking问题排查指南来啦</a></p>]]></content:encoded>
+        </item>
         <item>
             <title><![CDATA[Vite 打包 React 组件库]]></title>
             <link>https://your-docusaurus-test-site.com/Garfield-blog/vite-打包-react-组件库</link>
