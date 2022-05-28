@@ -75,7 +75,7 @@ https://create-react-app.dev/docs/getting-started
 CRA 内置了一些非常有用的环境变量，可以用来覆盖开发、生产环境下的默认行为。我们可以在项目根目录建一个 `.env` 文件：
 
 ```bash title=".env"
-# 非跟路径下部署的资源路径前缀
+# assets 和 public 的静态资源前缀
 PUBLIC_URL=/tclient
 # 禁用 ESLint 检查
 DISABLE_ESLINT_PLUGIN=true
@@ -181,7 +181,7 @@ module.exports = function override(config, env) {
 
 我们可以使用 `react-app-rewired` 添加 Babel 配置、添加 less 预编译配置、添加 Webpack alias 等等：
 
-```js
+```js title="config-overrides.js"
 const path = require("node:path");
 const {
   override,
@@ -193,7 +193,6 @@ const {
 module.exports = override(
   // 配置 antd 按需引入
   // 主要是样式按需引入，JS 可以通过 Tree-Shaking 方式实现按需引入
-  // 注意对于 CRA 5.0.0，已经内置了提案阶段语法插件，这里不用再配置了
   fixBabelImports('import', {
     libraryName: 'antd',
     libraryDirectory: 'es',
@@ -214,6 +213,29 @@ module.exports = override(
   })
 );
 ```
+
+:::tip
+
+注意 CRA 5.0.0 已经内置了 Babel 提案阶段语法插件，例如装饰器语法、类属性语法、可选链、空值合并运算符等等，这里不用再配置了。
+
+在 TS 项目中配置 Webpack alias，还需要到 `tsconfig.json` 中添加如下配置：
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    // 注意：baseUrl 必选，与 paths 成对出现，以 tsconfig.json 文件所在目录开始
+    "baseUrl": ".", 
+    "paths": {
+      // 映射列表
+      "@/*": [
+        "src/*"
+      ],
+    }
+  }
+}
+```
+
+:::
 
 ## CRA 项目非跟路径部署的正确姿势
 
