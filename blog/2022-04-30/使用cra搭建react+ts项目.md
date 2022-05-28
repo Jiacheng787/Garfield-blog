@@ -8,6 +8,213 @@ tags: []
 
 <!--truncate-->
 
+## 项目初始化
+
+CRA v5.0.0 之后要求 `node >= 14`，毕竟现在 Node 12 已经不再维护了，所以如果是新项目，就尽量升级到 latest LTS 吧。
+
+另外还要注意一些更新：
+
+- CRA v5.0.0 开始支持 Webpack5
+- CRA v5.0.1 开始，项目模板 React 升级到 React18
+
+:::tip
+
+好多同学都反映升级 React18 之后，组件会莫名其妙重复挂载两次，结果排查到最后发现是 `StrictMode` 引起的。
+
+这里强烈建议先看一下 React18 官方的 Changelog，特别是 Breaking Change，然后再上手开发，以免遇到一些 bug。
+
+> https://github.com/facebook/react/releases/tag/v18.0.0
+
+:::
+
+创建项目：
+
+```bash
+# 使用 npm
+$ npm init react-app my-app
+
+# 使用 yarn
+$ yarn create react-app my-app
+```
+
+创建 TS 项目：
+
+```bash
+# 使用 npm
+$ npm init react-app my-app --template typescript
+
+# 使用 yarn
+$ yarn create react-app my-app --template typescript
+```
+
+:::tip
+
+通过上面的命令可以看出，CRA 创建普通项目和 TS 项目的区别就是项目模板不同而已，打包构建都是复用同一套配置，也就是说，即使是存量的 JS 项目，也可以很方便地迁移到 TS 项目。
+
+CRA 官方文档：
+
+https://create-react-app.dev/docs/getting-started
+
+:::
+
+## 如何覆盖 CRA 默认 Webpack 配置
+
+我们知道，在 Vue-cli 创建的项目中，我们可以在项目根目录创建一个 `vue.config.js` 传入自定义 Webpack 配置实现覆盖默认配置。虽说 CRA 并没有提供这个功能，但是官方还是提供了一些方法来覆盖 Webpack 配置。
+
+一般来说，我们想覆盖 Webpack 配置，主要就是想做这些：
+
+- 添加 babel 配置（通常都是 antd 按需引入、提案阶段语法插件等等）
+- 添加 less 预编译配置（默认只有 scss）
+- 添加 Webpack alias
+- 修改 devServer 配置（例如修改端口）
+- 添加代理配置（解决跨域问题）
+- 禁用 CI 环境下 ESLint 检查（防止报错导致打包失败）
+
+### 1) 使用 CRA 内置环境变量
+
+CRA 内置了一些非常有用的环境变量，可以用来覆盖开发、生产环境下的默认行为。我们可以在项目根目录建一个 `.env` 文件：
+
+```bash title=".env"
+# 非跟路径下部署的资源路径前缀
+PUBLIC_URL=/tclient
+# 禁用 ESLint 检查
+DISABLE_ESLINT_PLUGIN=true
+```
+
+```bash title=".env.development"
+# 修改端口，默认是 3000
+PORT=8066
+```
+
+```bash title=".env.production"
+# 打包输出路径，注意默认是 /build
+BUILD_PATH=/dist
+```
+
+:::tip
+
+注意除了内置环境变量之外，自定义环境变量必须以 `REACT_APP_` 开头。
+
+更多环境变量参考：
+
+https://create-react-app.dev/docs/advanced-configuration
+
+:::
+
+### 2）使用 `setupProxy` 添加代理配置
+
+CRA 允许在 `package.json` 中添加 `proxy` 字段，但是通常都无法满足需要：
+
+```json title="package.json"
+{
+  "proxy": "http://localhost:4000",
+}
+```
+
+此时，可以建一个 `src/setupProxy.js` 文件，手动配置代理：
+
+```js title="src/setupProxy.js"
+const { createProxyMiddleware } = require('http-proxy-middleware');
+
+module.exports = function(app) {
+  app.use(
+    '/api',
+    createProxyMiddleware({
+      target: 'http://localhost:5000',
+      changeOrigin: true,
+    })
+  );
+};
+```
+
+:::tip
+
+注意 `setupProxy.js` 是 CRA 提供的功能，在启动 devServer 的时候，会自动加载该模块。
+
+这里用到的 `http-proxy-middleware` 是 Express 的中间件，具体用法可以参考：
+
+https://github.com/chimurai/http-proxy-middleware
+
+:::
+
+### 3) 使用 react-app-rewired
+
+这个是万能方法，可以直接拿到 Webpack 配置并进行修改，基本不需要 eject 就能满足一切需要了。
+
+首先 `react-app-rewired` 是一个开源库，维护、更新比较频繁：
+
+> https://github.com/timarney/react-app-rewired
+
+我们首先安装这个库：
+
+```bash
+$ yarn add react-app-rewired -D
+```
+
+在 `package.json` 中修改 npm scripts：
+
+```json title="package.json"
+{
+  "scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-scripts eject"
+  }
+}
+```
+
+然后在项目根目录下建一个 `config-overrides.js`：
+
+```js title="config-overrides.js"
+module.exports = function override(config, env) {
+  // 在这里可以修改 Webpack 配置
+  return config;
+}
+```
+
+通常 `react-app-rewired` 会搭配 `customize-cra` 一起使用，后者可以提供一些 Webpack 的配置函数，通过类似管道操作的方式进行配置，比手动修改 Webpack 配置方便一些。
+
+这里注意 `customize-cra` 已经有两年没维护了，某些配置函数可能不兼容：
+
+> https://github.com/arackaf/customize-cra
+
+我们可以使用 `react-app-rewired` 添加 Babel 配置、添加 less 预编译配置、添加 Webpack alias 等等：
+
+```js
+const path = require("node:path");
+const {
+  override,
+  fixBabelImports,
+  addLessLoader,
+  addWebpackAlias
+} = require("customize-cra");
+
+module.exports = override(
+  // 配置 antd 按需引入
+  // 主要是样式按需引入，JS 可以通过 Tree-Shaking 方式实现按需引入
+  // 注意对于 CRA 5.0.0，已经内置了提案阶段语法插件，这里不用再配置了
+  fixBabelImports('import', {
+    libraryName: 'antd',
+    libraryDirectory: 'es',
+    style: true, // 或者css, true代表运用less
+  }),
+  addLessLoader({
+    javascriptEnabled: true,
+    modifyVars: {}
+  }),
+  addWebpackAlias({
+    "@": path.resolve(__dirname, "src"),
+    "@api": path.resolve(__dirname, "src/api"),
+    "@pages": path.resolve(__dirname, "src/pages"),
+    "@utils": path.resolve(__dirname, "src/utils"),
+    "@store": path.resolve(__dirname, "src/store"),
+    "@routes": path.resolve(__dirname, "src/routes"),
+    "@components": path.resolve(__dirname, "src/components"),
+  })
+);
+```
+
 ## CRA 项目非跟路径部署的正确姿势
 
 项目中需要使用一个子路径部署页面，例如 `/tclient`。此时 HTML 入口文件中所有的资源地址都要改成从 `/tclient` 路径下去访问。
