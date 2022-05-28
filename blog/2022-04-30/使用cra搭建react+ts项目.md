@@ -195,7 +195,9 @@ const App: React.FC<{}> = () => {
 export default App;
 ```
 
-## 解决 CRA 项目在 CI 环境因 ESLint 报错导致打包失败的问题
+## 配置 ESLint 和 Prettier
+
+### 1) 解决 CRA 项目在 CI 环境因 ESLint 报错导致打包失败的问题
 
 CRA 内部使用 `ESLint Plugin` 进行代码检查，而非命令的方式。当 ESLint 存在问题时，CRA 如果判断当前是 CI 环境，则直接报错并退出进程，导致打包失败：
 
@@ -230,6 +232,47 @@ DISABLE_ESLINT_PLUGIN=true
 ```
 
 > 当然更合理的做法应该是在开发环境下就启用严格的 ESLint 检查，确保提交的代码都是符合规范的
+
+### 2) VSCode 配置保存自动格式化
+
+在上面的内容中，我们知道 CRA 实际上已经内置了 ESLint 配置，并且可以配合 Git Hooks、打包构建进行代码规范检查、格式化等。
+
+但是在 Git Hooks、打包构建阶段进行 lint 并不是最好的做法，更好的做法是直接配置 VSCode 保存自动格式化，提升开发体验。
+
+在项目根目录建一个 `.vscode/settings.json`，编写内容如下：
+
+```json title=".vscode/settings.json"
+{
+  "files.eol": "\n",
+  "editor.tabSize": 2,
+  // 代码粘贴时格式化
+  "editor.formatOnPaste": true,
+  // 代码保存时格式化
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "eslint.validate": ["javascript", "javascriptreact", "vue", "typescript", "typescriptreact"],
+  "editor.codeActionsOnSave": {
+    // 在保存时使用 eslint 格式化
+    "source.fixAll.eslint": true,
+    // 保存时整理 import ，去掉没用的导包
+    "source.organizeImports": true
+  },
+}
+```
+
+:::tip
+
+推荐将上面的配置提交到代码仓库，这样多人协作开发的时候，大家都能使用同一套配置。
+
+:::
+
+另外，CRA 的 ESLint 配置实际上是一个单独的包，也就是说即使你的项目不是 CRA 搭建的，也可以使用 CRA 的 ESLint 配置：
+
+> https://github.com/facebook/create-react-app/tree/main/packages/eslint-config-react-app
+
+除了 CRA 官方的 ESLint 配置之外，还推荐腾讯 Alloy team 的 ESLint 配置：
+
+> https://github.com/AlloyTeam/eslint-config-alloy
 
 ## 参考
 
