@@ -61,7 +61,7 @@ https://create-react-app.dev/docs/getting-started
 
 我们知道，在 Vue-cli 创建的项目中，我们可以在项目根目录创建一个 `vue.config.js` 传入自定义 Webpack 配置实现覆盖默认配置。虽说 CRA 并没有提供这个功能，但是官方还是提供了一些方法来覆盖 Webpack 配置。
 
-一般来说，我们想覆盖 Webpack 配置，主要就是想做这些：
+一般来说覆盖 Webpack 配置，主要包括下面这些：
 
 - 添加 babel 配置（通常都是 antd 按需引入、提案阶段语法插件等等）
 - 添加 less 预编译配置（默认只有 scss）
