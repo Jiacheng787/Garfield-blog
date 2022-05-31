@@ -10,7 +10,7 @@ tags: [TypeScript]
 
 ## TS 类型定义
 
-TS 声明文件中定义的 `type` 和 `interface` 可以全局使用，但是普通 ts 模块定义的 `type` 和 `interface` 只能在当前模块访问，如果需要在其他模块使用，需要先 `export type` 导出类型，然后 `import type` 进行导入。
+TS 声明文件中定义的 `type` 和 `interface` 可以全局使用。但是需要注意普通 ts 模块定义的 `type` 和 `interface` 只能在当前模块访问，如果需要在其他模块使用，需要先 `export type` 导出类型，然后 `import type` 进行导入。
 
 ## TS 泛型和方法重载的区别
 
