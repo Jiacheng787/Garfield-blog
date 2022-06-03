@@ -29,6 +29,12 @@ tags: []
 
 为什么要分包？一句话总结：减少 chunk 资源冗余，提升缓存复用率。
 
+## 如何学习 Vite 配置
+
+如果有些 Vite 配置不知道怎么写，文档也没有详细说明（特别是一些 rollup 的配置），这时候可以参考下 Vite 官方的 playground，给了非常详尽的 demo：
+
+https://github.com/vitejs/vite/tree/main/playground
+
 ## Vite 存在哪些问题
 
 ### 1) 官方汇总的 issue
