@@ -29,6 +29,18 @@ tags: []
 
 为什么要分包？一句话总结：减少 chunk 资源冗余，提升缓存复用率。
 
+### 3) 开发插件的时候考虑打包工具兼容性
+
+例如开发一个按需引入的插件，开发 Babel 插件就比 Rollup 插件要好。为啥？因为 Rollup 插件只能给 Rollup 用，换做 Vite、Webpack 就用不了了，而 Babel 插件就很强大，可以支持各种打包器。
+
+最近前端圈流行各种 `unplugin`，即同时支持 Vite、Webpack、Rollup 打包器的插件，特别是 antfu 大佬搞了一个 unjs：
+
+> https://github.com/unjs
+
+然后前不久刚发布正式版的 ElementPlus，官方提供的按需引入插件也做成了 `unplugin` 形式：
+
+> https://github.com/element-plus/unplugin-element-plus
+
 ## 如何学习 Vite 配置
 
 如果有些 Vite 配置不知道怎么写，文档也没有详细说明（特别是一些 rollup 的配置），这时候可以参考下 Vite 官方的 playground，给了非常详尽的 demo：
