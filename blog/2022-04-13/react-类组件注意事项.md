@@ -45,6 +45,16 @@ class MyCompoment extends React.Component {
 }
 ```
 
+:::tip
+
+注意：需要确保编译工具正确配置 `@babel/plugin-proposal-class-properties` 语法插件，才能使用 Class Properties 语法。
+
+由于该语法已经纳入 ES2022 标准，所以使用 `@babel/preset-env` 就可以无需单独配置。
+
+在 Vite 打包的项目中，`@vitejs/plugin-react` 也内置了 Class Properties 语法插件，无需配置可以直接使用。
+
+:::
+
 ## 3. 状态更新可能是异步的
 
 React 可能会对多次 `setState()` 调用进行批处理，使组件只更新一次，因此 `this.props` 和 `this.state` 可能会异步更新。所以不能依赖 `this.state` 计算下一个状态，这种情况下，可以使用函数式更新：
@@ -55,7 +65,15 @@ this.setState((prevState, prevProps) => ({
 }));
 ```
 
-## 4. 注意事件处理函数的 `this` 绑定问题
+## 4. 不需要视图渲染的变量，不要放在 `state` 里面
+
+在函数组件中，每次调用 `setState` 就会触发调度更新，进而组件 rerender，更新视图。因此，有一些不需要视图渲染的变量，我们通常用 `useRef` 缓存而不是 `useState`。
+
+我们知道，函数组件 rerender，其实就是执行整个函数体，内部 hooks 都会重新执行，整个执行上下文都会销毁，重新创建。与函数组件不同，类组件的 `constructor` 只会在组件实例初始化的时候执行一次，所有实例属性、方法也是初始化一次，后续组件 rerender 的时候，只有 `render` 函数重复执行。
+
+与函数组件类似，类组件中与视图渲染无关的变量，也不应该放在 `state` 中，而是作为普通实例属性，否则每次 `setState` 都会触发组件 rerender，进而引起性能问题。
+
+## 5. 注意事件处理函数的 `this` 绑定问题
 
 一般标准的写法是这样：
 
@@ -116,7 +134,7 @@ class MyCompoment extends React.Component {
 }
 ```
 
-Class Properties 实际上是一个编译时语法糖。如果不想用 Class Properties 语法，还有一种方案，把事件处理函数定义在构造方法里面：
+Class Properties 实际上是一个编译时语法糖。如果不想配置语法插件，还有一种方案，把事件处理函数定义在构造方法里面：
 
 ```jsx
 class MyCompoment extends React.Component {
@@ -148,7 +166,7 @@ class MyCompoment extends React.Component {
 
 -->
 
-## 5. 关于 `this` 的几个注意点
+## 6. 关于 `this` 的几个注意点
 
 ### 1) 箭头函数中 `this` 指向能否改变
 
