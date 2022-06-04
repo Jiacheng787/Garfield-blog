@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkgarfield_blog=self.webpackChunkgarfield_blog||[]).push([[7680],{6015:function(e){e.exports=JSON.parse('{"permalink":"/Garfield-blog/page/3","page":3,"postsPerPage":10,"totalPages":3,"totalCount":26,"previousPage":"/Garfield-blog/page/2","blogDescription":"Blog","blogTitle":"Blog"}')}}]);
