@@ -196,3 +196,22 @@ require("./dist/main.js");
 
 - 通过 Webpack 等打包工具支持 ESM 模块（Webpack 默认使用 `web` 环境构建，需要配置 `target: "node"` 避免打包 Node 内置模块）；
 - 还可以使用 `ts-node`、`jiti` 等 runtime 支持 ESM 模块（内部使用 `tsc` 或者 `babel` 进行编译）；
+
+## 5. 前端项目应该使用哪种模块规范
+
+之前维护过一些前端老工程，用的是 CJS 的模块规范，这是因为 Webpack 出现比 Rollup 早，那个时候还没有 ES2015 标准，更谈不上 ES Module 规范了，因此 Webpack 最早只支持 CJS、AMD、CMD 等模块规范。
+
+从 Webpack 3 开始支持 ESM 格式的打包，并且支持基于 ESM 的 Tree-Shaking。但是对于 JSON 模块，还是建议使用 CJS 的方式引入，因为 JSON 模块并不是合法的 ESM，不能通过 `import` 语句导入。虽然 Webpack 底层会将 ESM 转为 CJS 进行打包，但还是建议使用 `require` 的方式导入 JSON 模块。
+
+`import` 命令目前只能用于加载 ES 模块，现在有一个提案，允许加载 JSON 模块。`import` 命令能够直接加载 JSON 模块以后，就可以像下面这样写:
+
+```javascript
+import configData from './config.json' assert { type: "json" };
+console.log(configData.appName);
+```
+
+> `import` 命令导入 JSON 模块时，命令结尾的 `assert {type: "json"}` 不可缺少。这叫做导入断言，用来告诉 JavaScript 引擎，现在加载的是 JSON 模块
+
+## 6. 如何理解 esModuleInterop
+
+[esModuleInterop 到底做了什么？](https://zhuanlan.zhihu.com/p/148081795)
