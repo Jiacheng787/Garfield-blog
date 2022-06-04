@@ -8,7 +8,7 @@ tags: []
 
 <!--truncate-->
 
-## 项目初始化
+## 1. 项目初始化
 
 CRA v5.0.0 之后要求 `node >= 14`，毕竟现在 Node 12 已经不再维护了，所以如果是新项目，就尽量升级到 latest LTS 吧。
 
@@ -57,7 +57,7 @@ https://create-react-app.dev/docs/getting-started
 
 :::
 
-## 如何覆盖 CRA 默认 Webpack 配置
+## 2. 如何覆盖 CRA 默认 Webpack 配置
 
 我们知道，在 Vue-cli 创建的项目中，我们可以在项目根目录创建一个 `vue.config.js` 传入自定义 Webpack 配置实现覆盖默认配置。虽说 CRA 并没有提供这个功能，但是官方还是提供了一些方法来覆盖 Webpack 配置。
 
@@ -237,7 +237,209 @@ module.exports = override(
 
 :::
 
-## CRA 项目非跟路径部署的正确姿势
+## 3. 🚧 React Router v6 指南
+
+[「React进阶」react-router v6 通关指南](https://juejin.cn/post/7069555976717729805)
+
+https://github.com/remix-run/react-router
+
+## 4. 🚧 Redux + React Redux + Redux Toolkit 指南
+
+这里解释一下这三个库分别是干什么的：
+
+- Redux：核心库
+- React Redux：Redux 的 UI-binding，即 Redux 结合 React 使用的库。也就是说，Redux 只负责存储全局状态，暴露访问、修改状态的方法，但无法在状态改变的时候更新 UI。React Redux 可以进行依赖收集，订阅状态变化，在状态改变的时候通知 UI 更新
+- Redux Toolkit：让 Redux 用得更爽，可以减少模板代码
+
+## 5. 🚧 CSS 工程化指南
+
+### 1) CSS Reset
+
+为什么要 CSS Reset 呢？因为除了 `div`、`span` 等之外的标签，都有默认样式，而这些样式在不同浏览器中都不太一样，这对于 UI 交互一致性来说影响很大。因此 CSS Reset 的作用就是提供一套样式预设，抹平不同浏览器样式差异，提供一致性的默认样式。
+
+:::tip
+
+顺便一提，HTML 5 中其实新增了很多语义化标签，但是平时开发却用的很少，还是因为同样的问题，这些标签都有默认样式，更糟糕的是有些样式还不好覆盖。好在各种组件库（例如 antd、Element UI）提供了各种 UI 组件，能满足大部分场景的需要。
+
+:::
+
+CRA 内置了 PostCSS Normalize（相比 normalize.css 增加了根据 browserslist 配置按需使用），使用也很简单，只需要在根元素的样式文件（例如 `App.css`）加入下面的代码即可：
+
+```css
+@import-normalize; /* bring in normalize.css styles */
+```
+
+### 2) 使用哪种预编译器
+
+在前端项目中 Less、Sass 其实都有用到，但还是推荐使用 Less。为什么不用 Sass 呢？其实 Sass 和 Less 本质上没有太多区别，也没有什么好坏之分，我选择 Less 的原因是，我的项目中大量使用 antd 的组件库，而 antd 使用的是 Less 的方案，而且如果要定制 antd 的主题，就必须用 Less。
+
+### 3) 如何解决命名冲突
+
+在多人协作项目中，各种命名五花八门，样式命名冲突问题比较严重。如何避免样式命名冲突呢？有不少解决方案：
+
+- BEM 命名规范（可行性不高）
+- Scoped CSS（Vue 项目用的比较多）
+- CSS Module（推荐）
+- CSS in JS
+- 原子类 CSS
+
+在 CRA 项目中推荐使用 CSS Module 方案，而且还可以跟 CSS 预编译器配合使用，例如 `.module.less` 等。
+
+:::tip
+
+注意，在 Webpack 打包的项目中，CSS Module 是由 css-loader 支持的（底层是 PostCSS 实现），默认根据 `.module.css` 等文件后缀开启，当然也可以全局启用，但是这样侵入性比较大。在 Vite 打包的项目中则是直接用了 PostCSS 实现 CSS Module。
+
+:::
+
+[【第2629期】中后台 CSS Modules 最佳实践](https://mp.weixin.qq.com/s/q8RDt9ekF0upq4KfEZ2jUQ)
+
+## 6. React 生态介绍
+
+### 1) React 常用状态管理库
+
+- Redux
+- Mobx
+- dva/umi
+- Recoil
+- Hookstate
+- Rematch
+- Jotai
+- Zustand
+
+### 2) 获取数据
+
+- [React-query](https://github.com/tannerlinsley/react-query)
+- [SWR](https://github.com/vercel/swr)
+
+### 3) Hooks
+
+- [React-use](https://github.com/streamich/react-use)
+- [ahooks](https://github.com/alibaba/hooks)
+
+### 4) 动画库
+
+- [React-transition-group](https://github.com/reactjs/react-transition-group)
+- [React-spring](https://github.com/pmndrs/react-spring)
+
+[2022 年的 React 生态](https://juejin.cn/post/7085542534943883301)
+
+## 7. 🚧 React 性能优化指南
+
+[从源码中来，到业务中去，React性能优化终极指南](https://mp.weixin.qq.com/s/DswfPb6J1w2B_MWj1TjyOg)
+
+[剖析React核心设计原理—Virtual Dom](https://mp.weixin.qq.com/s/l19wbHNIrhjyD0HwJwuvmQ)
+
+## 8. 🚧 TypeScript 接入指南
+
+### 1) 如何引入 React
+
+一般来说，在 React 项目中我们需要在每个文件顶部 `import`，即使该模块没有用到 React 的 API：
+
+```jsx
+import React from 'react';
+
+function App() {
+  return <h1>Hello world</h1>;
+}
+```
+
+这是因为浏览器无法识别 JSX 语法，所以我们需要通过 Babel、TypeScript 等工具将 JSX 编译为浏览器能识别的 render 函数。在 React 17 之前，JSX 会转换为 `React.createElement(...)` 调用：
+
+```jsx
+import React from 'react';
+
+function App() {
+  return React.createElement('h1', null, 'Hello world');
+}
+```
+
+> 实际上 JSX 就是一种领域特定语言
+
+正是因为 JSX 会转换为 `React.createElement(...)`，所以每个组件顶部必须导入 `React`。但是 TS 中默认不能从没有设置默认导出的模块中默认导入，需要添加如下配置：
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    // 允许从没有设置默认导出的模块中默认导入
+    "allowSyntheticDefaultImports": true,
+  }
+}
+```
+
+实际上，在 TS 中更推荐下面的写法：
+
+```jsx
+import * as React from "react";
+```
+
+以上这种用法称为 classic JSX，那么在 React 17 中新增了一种 automatic JSX，不需要手动在每个组件顶部导入 `React`，同时新的 JSX 转换不会将 JSX 转换为 `React.createElement`，而是自动从 `react/jsx-runtime` 中引入新的入口函数并调用。下方是新 JSX 被转换编译后的结果：
+
+```jsx
+// 由编译器引入（禁止自己引入！）
+import { jsx as _jsx } from 'react/jsx-runtime';
+
+function App() {
+  return _jsx('h1', { children: 'Hello world' });
+}
+```
+
+> 注意，此时源代码无需引入 React 即可使用 JSX 了！（但是如果使用 React 提供的 Hook 或其他导出，这种情况下仍需引入 React）
+
+新的 JSX 转换对应的配置是 `runtime: "automatic"`：
+
+```js title="babel.config.js"
+module.exports = {
+  presets: [
+    [
+      "@babel/preset-react",
+      {
+        // 新的 JSX 转换 -> automatic
+        // 旧的 JSX 转换 -> classic
+        runtime: "automatic"
+      }
+    ]
+  ]
+}
+```
+
+:::tip
+
+可以直接在 Babel Playground 看编译结果：
+
+https://babeljs.io/repl
+
+:::
+
+在 CRA 创建的项目中，默认就启用了 automatic JSX，无需额外配置。当然如果手动配置，还需要添加如下配置：
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    // 启用新的 JSX 转换
+    "jsx": "react-jsx",
+  }
+}
+```
+
+```js title=".eslintrc.js"
+module.exports = {
+  extends: {
+    // 当我们不去写 import React from 'react'
+    // ESLint 不会报错
+    'plugin:react/jsx-runtime',
+  }
+}
+```
+
+总结一下，在 TS 项目中引入 React 正确的方法是：
+
+```jsx
+import * as React from "react";
+```
+
+> 如果你的项目是 React 17+，虽然可以不写，但是大概率都会用到 Hooks，所以还是建议编写 `import` 语句
+
+## 9. CRA 项目非跟路径部署的正确姿势
 
 项目中需要使用一个子路径部署页面，例如 `/tclient`。此时 HTML 入口文件中所有的资源地址都要改成从 `/tclient` 路径下去访问。
 
@@ -424,7 +626,7 @@ const App: React.FC<{}> = () => {
 export default App;
 ```
 
-## 配置 ESLint 和 Prettier
+## 10. 配置 ESLint 和 Prettier
 
 ### 1) 解决 CRA 项目在 CI 环境因 ESLint 报错导致打包失败的问题
 
@@ -503,7 +705,7 @@ DISABLE_ESLINT_PLUGIN=true
 
 > https://github.com/AlloyTeam/eslint-config-alloy
 
-## 参考
+## 11. 参考
 
 [都 2022 年了，手动搭建 React 开发环境很难吗](https://juejin.cn/post/7087811040591675428)
 
