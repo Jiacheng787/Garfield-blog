@@ -4,10 +4,18 @@
         <title>Garfield's Blog Blog</title>
         <link>https://your-docusaurus-test-site.com/Garfield-blog/</link>
         <description>Garfield's Blog Blog</description>
-        <lastBuildDate>Sun, 05 Jun 2022 20:22:00 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 05 Jun 2022 20:38:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Chrome debugger 小技巧]]></title>
+            <link>https://your-docusaurus-test-site.com/Garfield-blog/chrome-debugger-小技巧</link>
+            <guid>chrome-debugger-小技巧</guid>
+            <pubDate>Sun, 05 Jun 2022 20:38:00 GMT</pubDate>
+            <description><![CDATA[大家都知道 Chrome 打断点调试，可以通过 F8 跳转下一个断点，F9 单步调试。]]></description>
+            <content:encoded><![CDATA[<p>大家都知道 Chrome 打断点调试，可以通过 F8 跳转下一个断点，F9 单步调试。</p><p>在 Chrome 浏览器中打断点调试，此时切到控制台，可以访问断点位置上下文信息，也就是说可以访问、甚至修改变量。</p>]]></content:encoded>
+        </item>
         <item>
             <title><![CDATA[关于 Object.keys 几个注意点]]></title>
             <link>https://your-docusaurus-test-site.com/Garfield-blog/关于-object.keys-几个注意点</link>

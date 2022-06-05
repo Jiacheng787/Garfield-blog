@@ -2,11 +2,23 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://your-docusaurus-test-site.com/Garfield-blog/</id>
     <title>Garfield's Blog Blog</title>
-    <updated>2022-06-05T20:22:00.000Z</updated>
+    <updated>2022-06-05T20:38:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://your-docusaurus-test-site.com/Garfield-blog/"/>
     <subtitle>Garfield's Blog Blog</subtitle>
     <icon>https://your-docusaurus-test-site.com/Garfield-blog/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Chrome debugger 小技巧]]></title>
+        <id>chrome-debugger-小技巧</id>
+        <link href="https://your-docusaurus-test-site.com/Garfield-blog/chrome-debugger-小技巧"/>
+        <updated>2022-06-05T20:38:00.000Z</updated>
+        <summary type="html"><![CDATA[大家都知道 Chrome 打断点调试，可以通过 F8 跳转下一个断点，F9 单步调试。]]></summary>
+        <content type="html"><![CDATA[<p>大家都知道 Chrome 打断点调试，可以通过 F8 跳转下一个断点，F9 单步调试。</p><p>在 Chrome 浏览器中打断点调试，此时切到控制台，可以访问断点位置上下文信息，也就是说可以访问、甚至修改变量。</p>]]></content>
+        <author>
+            <name>加菲猫</name>
+            <uri>https://github.com/Jiacheng787</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[关于 Object.keys 几个注意点]]></title>
         <id>关于-object.keys-几个注意点</id>
