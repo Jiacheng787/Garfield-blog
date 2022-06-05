@@ -293,7 +293,7 @@ CRA 内置了 PostCSS Normalize（相比 normalize.css 增加了根据 browsersl
 
 [【第2629期】中后台 CSS Modules 最佳实践](https://mp.weixin.qq.com/s/q8RDt9ekF0upq4KfEZ2jUQ)
 
-## 6. React 生态介绍
+## 6. 🚧 React 生态介绍
 
 ### 1) React 常用状态管理库
 
@@ -320,6 +320,8 @@ CRA 内置了 PostCSS Normalize（相比 normalize.css 增加了根据 browsersl
 
 - [React-transition-group](https://github.com/reactjs/react-transition-group)
 - [React-spring](https://github.com/pmndrs/react-spring)
+
+[20个GitHub仓库助你成为React大师](https://juejin.cn/post/7104460511869141006)
 
 [2022 年的 React 生态](https://juejin.cn/post/7085542534943883301)
 
