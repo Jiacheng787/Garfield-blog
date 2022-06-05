@@ -2,11 +2,23 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://your-docusaurus-test-site.com/Garfield-blog/</id>
     <title>Garfield's Blog Blog</title>
-    <updated>2022-06-04T11:43:00.000Z</updated>
+    <updated>2022-06-05T20:22:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://your-docusaurus-test-site.com/Garfield-blog/"/>
     <subtitle>Garfield's Blog Blog</subtitle>
     <icon>https://your-docusaurus-test-site.com/Garfield-blog/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[关于 Object.keys 几个注意点]]></title>
+        <id>关于-object.keys-几个注意点</id>
+        <link href="https://your-docusaurus-test-site.com/Garfield-blog/关于-object.keys-几个注意点"/>
+        <updated>2022-06-05T20:22:00.000Z</updated>
+        <summary type="html"><![CDATA[1. Object.keys() 返回类型始终为 string[]]]></summary>
+        <content type="html"><![CDATA[<h2 class="anchor anchorWithStickyNavbar_mojV" id="1-objectkeys-返回类型始终为-string">1. <code>Object.keys()</code> 返回类型始终为 <code>string[]</code><a class="hash-link" href="#1-objectkeys-返回类型始终为-string" title="Direct link to heading">​</a></h2><p>因为 JS 对象 key 的类型只有三种：<code>number</code>、<code>string</code>、<code>Symbol</code>，需要注意 <code>number</code> 类型底层也是按 <code>string</code> 进行存储，而 <code>Symbol</code> 类型不可枚举。</p><h2 class="anchor anchorWithStickyNavbar_mojV" id="2-es2015-之后-objectkeys-输出顺序是可以预测的">2. ES2015 之后 <code>Object.keys()</code> 输出顺序是可以预测的<a class="hash-link" href="#2-es2015-之后-objectkeys-输出顺序是可以预测的" title="Direct link to heading">​</a></h2><p>我们说普通对象的 Key 是无序的，不可靠的，指的是不能正确维护插入顺序，与之相对的是 Map 实例会维护键值对的插入顺序。</p><p>在 ES2015 之后，普通对象 Key 顺序是可预测的。先按照自然数升序进行排序，然后按照非数字的 String 的加入时间排序，然后按照 Symbol 的时间顺序进行排序。也就是说他们会先按照上述的分类进行拆分，先按照自然数、非自然数、Symbol 的顺序进行排序，然后根据上述三种类型下内部的顺序进行排序。</p><blockquote><p>使用 <code>Object.keys()</code> 只会输出对象自身可枚举属性的 key，不含 <code>Symbol</code> 类型的 key。如果要输出 <code>Symbol</code> 类型 key，可以使用 <code>Reflect.ownKeys()</code></p></blockquote><p><a href="https://mp.weixin.qq.com/s/qyyrQNC6q6p496OdZIQ6ew" target="_blank" rel="noopener noreferrer">[<!-- -->科普<!-- -->]<!-- --> JS中Object的keys是无序的吗</a></p>]]></content>
+        <author>
+            <name>加菲猫</name>
+            <uri>https://github.com/Jiacheng787</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Node.js 调试相关问题]]></title>
         <id>node.js-调试相关问题</id>
