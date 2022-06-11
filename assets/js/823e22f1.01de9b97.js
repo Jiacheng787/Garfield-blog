@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkgarfield_blog=self.webpackChunkgarfield_blog||[]).push([[4415],{1453:function(e){e.exports=JSON.parse('{"allTagsPath":"/Garfield-blog/tags","name":"TypeScript","count":1,"permalink":"/Garfield-blog/tags/type-script"}')}}]);

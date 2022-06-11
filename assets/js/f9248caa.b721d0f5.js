@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkgarfield_blog=self.webpackChunkgarfield_blog||[]).push([[6552],{704:function(l){l.exports=JSON.parse('{"label":"GIT","permalink":"/Garfield-blog/tags/git","allTagsPath":"/Garfield-blog/tags","count":1}')}}]);

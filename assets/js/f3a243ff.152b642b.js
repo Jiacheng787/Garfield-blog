@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkgarfield_blog=self.webpackChunkgarfield_blog||[]).push([[7394],{3343:function(l){l.exports=JSON.parse('{"label":"\u5f00\u53d1\u73af\u5883\u914d\u7f6e","permalink":"/Garfield-blog/tags/\u5f00\u53d1\u73af\u5883\u914d\u7f6e","allTagsPath":"/Garfield-blog/tags","count":1}')}}]);

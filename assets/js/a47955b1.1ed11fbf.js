@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkgarfield_blog=self.webpackChunkgarfield_blog||[]).push([[1683],{1495:function(e){e.exports=JSON.parse('{"label":"VS Code","permalink":"/Garfield-blog/tags/vs-code","allTagsPath":"/Garfield-blog/tags","count":1}')}}]);
