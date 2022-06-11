@@ -85,3 +85,85 @@ https://github.com/vitejs/vite/discussions/8232
 ### 2) 生态尚不完善
 
 awesome-vite 上面很多插件都是个人开发，没有专门的团队维护，一堆陈年的 issue 都没处理。但是官方提供的插件又太少，难以满足复杂业务场景需要。
+
+
+## Vite 源码分析
+
+### 1) Vite 打包流程
+
+首先调用 `rollup` 方法（Rollup 的编程式 API）编译出 `bundle` 添加到 `build` 数组中，接下来就是遍历它，进行 `bundle` 的写操作（即输出到硬盘上），因为 vite 使用的是 Rollup 完成文件的打包，所以这里调用的是 `bundle.write` 来将文件输出到硬盘上。
+
+```ts title="packages/vite/src/node/build.ts"
+for (const build of builds) {
+  const bundle = await build.bundle;
+  const { output } = await bundle[write ? 'write' : 'generate']({
+    dir: resolvedAssetsPath,
+    format: 'es',
+    sourcemap,
+    entryFileNames: `[name].[hash].js`,
+    chunkFileNames: `[name].[hash].js`,
+    assetFileNames: `[name].[hash].[ext]`,
+    ...config.rollupOutputOptions
+  });
+  build.html = await renderIndex(output);
+  build.assets = output
+  await postBuildHooks.reduce(
+    (queue, hook) => queue.then(() => hook(build as any)),
+    Promise.resolve();
+  )
+}
+```
+
+:::tip
+
+注意 Vite 2.x 源码结构稍有不同，但是整体流程还是类似的：
+
+https://github.com/vitejs/vite/blob/ab23e6e7b490cf610a4465cc533f671a729fdfa8/packages/vite/src/node/build.ts#L543
+
+:::
+
+这里有一个值得学习的地方，这边 `postBuildHooks` 的类型定义是 `((build: any) => Promise<any>)[]`，如何保证调用顺序，即上一次调用完成后进行下一次调用？
+
+通常我们用 `reduce` 做管道操作都是不能用于 Promise，因为管道操作需要将上一次调用的返回值，作为参数传入下一次调用，但 Promise 的话很可能是 `pending`，根本拿不到上一次调用的返回值。所以一般来说我们只能将 `reduce` 改成普通 `FOR` 循环：
+
+```js
+let initialValue = Promise.resolve();
+
+for (const hooks of postBuildHooks) {
+  initialValue = await hook(build);
+}
+```
+
+而源码中对 `reducer` 函数进行了包装，将 `hook` 的执行放到 `then` 方法回调中，这样就可以保证调用顺序：
+
+```ts
+await postBuildHooks.reduce(
+  (queue, hook) => queue.then(() => hook(build as any)),
+  Promise.resolve();
+)
+```
+
+对比一下函数式编程中 `compose` 的用法：
+
+```ts
+/**
+ * 参数：[A, B, C, D]
+ * 调用顺序：A(B(C(D())))
+ */
+const compose = (middlewares) => (initialValue) => middlewares.reduceRight(
+  (accu, cur) => cur(accu),
+  initialValue
+);
+
+/**
+ * 参数：[A, B, C, D]
+ * 调用顺序：D().then(res => C(res)).then(res => B(res)).then(res => A(res))
+ * 以上只是为了让大家看清楚，简化之后如下：D().then(C).then(B).then(A)
+ */
+const asyncCompose = (middlewares) => (initialValue) => middlewares.reduceRight(
+  (queue, hook) => queue.then(res => hook(res)),
+  Promise.resolve(initialValue)
+);
+```
+
+[vite 不支持 ie 11？configureBuild Hook 帮你定制 bundle 打包过程](https://juejin.cn/post/6889589799687028750)
