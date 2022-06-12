@@ -33,7 +33,19 @@ npm 包的依赖有哪些分类：
     - 在 `peerDependencies` 中声明的依赖
     - 在 `dependencies` 中声明的依赖
 
-> 这边补充一个背景：当我们 `npm i` 安装一个依赖的时候，同时还会安装该包 package.json 中 `dependencies` 节点下的依赖
+依赖外部化，有两种做法，一个是放到 `dependencies` 下，另一种是放到 `peerDependencies` 下。两者的区别是，`dependencies` 下的依赖，在 npm 包安装的时候也会一并安装，而 `peerDependencies` 下的依赖则不会安装。有同学会问，既然不会安装的话，`peerDependencies` 和 `devDependencies` 的区别在哪里？`peerDependencies` 的作用就是声明运行时所需的依赖版本，当运行环境没安装依赖或者版本不符合的时候，包管理器会给出警告。
+
+:::tip
+
+NPM 发包需要仔细分割依赖，如果目标环境存在，就放在 `peerDependencies` 下面，如果目标环境不存在，则放在 `dependencies` 下面，如果 `devDependencies` 存在运行时依赖，则直接打包进去。在发包的时候，可以直接移除 `scripts` （如果不需要在目标环境执行 postinstall 之类的脚本）和 `devDependencies`。
+
+[关于前端大管家 package.json，你知道多少？](https://mp.weixin.qq.com/s/fxX4oPHURDpvFvCIZUd7VA)
+
+[这还是我最熟悉的package.json吗？](https://juejin.cn/post/6953867408096362503)
+
+[npm init @vitejs/app的背后，仅是npm CLI的冰山一角](https://juejin.cn/post/6950817077670182943)
+
+:::
 
 对 npm 包来说，一般能打包就直接打包进去，如果在运行环境打包，会面临一系列问题（例如依赖版本不一致，导致潜在的不兼容问题）。
 
