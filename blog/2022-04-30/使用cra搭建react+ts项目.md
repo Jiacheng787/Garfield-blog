@@ -441,6 +441,25 @@ import * as React from "react";
 
 > 如果你的项目是 React 17+，虽然可以不写，但是大概率都会用到 Hooks，所以还是建议编写 `import` 语句
 
+### 2) 如何声明 React 组件
+
+```tsx
+import * as React from "react";
+
+type IProps = React.PropsWithChildren<{
+  foo: string;
+  bar: number;
+}>
+
+const App: React.FC<IProps> = ({ foo, bar, children }) => {
+  return (
+    <div>2333</div>
+  )
+}
+
+export default React.memo(App);
+```
+
 ## 9. CRA 项目非跟路径部署的正确姿势
 
 项目中需要使用一个子路径部署页面，例如 `/tclient`。此时 HTML 入口文件中所有的资源地址都要改成从 `/tclient` 路径下去访问。
