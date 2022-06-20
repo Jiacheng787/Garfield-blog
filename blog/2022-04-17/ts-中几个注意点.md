@@ -69,7 +69,43 @@ render: (_, record) => {
 }
 ```
 
-## TS 类型定义
+## TS 全局类型声明 & 模块类型声明
+
+:::tip
+
+由于 JS 代码有的 api 是全局的，有的 api 是模块内的，所以 TS 需要支持这个也很正常。
+
+但是 JS 一开始并没有模块规范，最开始是通过在全局挂一个对象，然后这个对象上再挂一些 api 的方式，也就是命名空间 namespace。
+
+所以 TS 最早支持的模块化方案自然也就是 namespace。
+
+后来，出现了 CommonJS 的规范，那种不能叫 namespace 了，所以 TS 支持了 module。用 astexplorer.net 看一下 parse 后的 AST，namespace 和 module 的 AST 类型都是一样的。也就是说编译器后续的处理都一样，那不是一种东西是什么。
+
+再后来的故事大家都知道了，JS 有了 es module 规范，所以现在推荐直接用 import export 的方式来声明模块和导入导出了。
+
+额外多了的，只不过有一个 import type 的语法，可以单独引入类型：
+
+```ts
+import type {xxx} from 'yyy';
+```
+
+所以现在声明模块不咋推荐用 namespace 和 module，还是尽量用 es module 吧。
+
+:::
+
+有了 es module 之后，TS 有了一个单独的设计：
+
+`.d.ts` 中，如果没有 `import`、`export` 语法，那所有的类型声明都是全局的，否则是模块内的。
+
+如果声明文件中使用了 `import`、`export`，则类型定义都是模块内的，需要通过 `import type` 语法导入，如果要让类型定义变为全局的，可以手动 `declare global`。
+
+那么如果就是需要引入模块，但是也需要全局声明类型，有什么更好的方式呢？
+
+有，通过编译器指令 reference。这样既可以引入类型声明，又不会导致所有类型声明都变为模块内的。
+
+可以看到很多 dts 都这样引入别的 dts 的，就是为了保证引入的类型声明依然是全局的。
+
+[TypeScript 深水区：3 种类型来源和 3 种模块语法](https://juejin.cn/post/7111112135903543332)
 
 TS 声明文件中定义的 `type` 和 `interface` 可以全局使用。但是需要注意普通 ts 模块定义的 `type` 和 `interface` 只能在当前模块访问，如果需要在其他模块使用，需要先 `export type` 导出类型，然后 `import type` 进行导入。
 
