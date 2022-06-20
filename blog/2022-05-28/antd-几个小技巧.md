@@ -30,6 +30,18 @@ tags: []
 />
 ```
 
+`rowKey` 除了传递字符串之外，还可以传一个函数：
+
+```tsx
+<Table
+  columns={columns}
+  dataSource={dataSource}
+  rowKey={(record, index) => `${record.userId}-${index}`}
+/>
+```
+
+这里要注意一个问题，后端返回的列表数据，并不一定存在唯一 id，假如 `rowKey` 选错了，即该字段可能不唯一，这会导致 `Table` 组件展示异常。本人遇到过一个问题，`userId` 并不是唯一 id，但是前端选了 `rowKey="userId"`，然后这个列表是后端分页的，结果分页的时候，后端只返回 2 条数据，但实际展示的时候莫名其妙多出几条数据。
+
 ## 如何实现多行文本省略
 
 这个功能不需要自己实现，自己实现还可能存在兼容性问题。只需要使用 antd 的 `Typography` 组件就可以了：
