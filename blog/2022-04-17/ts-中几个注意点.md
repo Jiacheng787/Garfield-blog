@@ -95,15 +95,62 @@ import type {xxx} from 'yyy';
 
 有了 es module 之后，TS 有了一个单独的设计：
 
-`.d.ts` 中，如果没有 `import`、`export` 语法，那所有的类型声明都是全局的，否则是模块内的。
+`.d.ts` 中类型声明默认都是全局的，但如果使用了 `import`、`export` 等模块语法，就会变成模块内的。
 
-如果声明文件中使用了 `import`、`export`，则类型定义都是模块内的，需要通过 `import type` 语法导入，如果要让类型定义变为全局的，可以手动 `declare global`。
+<!-- `.d.ts` 中，如果没有 `import`、`export` 语法，那所有的类型声明都是全局的，否则是模块内的。 -->
 
-那么如果就是需要引入模块，但是也需要全局声明类型，有什么更好的方式呢？
+这样就会存在以下几种情况：
 
-有，通过编译器指令 reference。这样既可以引入类型声明，又不会导致所有类型声明都变为模块内的。
+**1. 不使用模块语法，默认就是全局声明**
 
-可以看到很多 dts 都这样引入别的 dts 的，就是为了保证引入的类型声明依然是全局的。
+```ts title="type.d.ts"
+// 全局声明
+type DataType = {
+  name: string;
+  age: number;
+}
+```
+
+**2. 如果不希望全局声明，只要用一下模块语法即可**
+
+```ts title="type.d.ts"
+// 模块内的声明
+// 如果需要使用该声明，需要通过 import type 导入
+export type DataType = {
+  name: string;
+  age: number;
+}
+```
+
+**3. 在模块内部可以通过 declare global 全局声明**
+
+```ts title="type.d.ts"
+// 模块内的声明
+export type DataType = {
+  name: string;
+  age: number;
+};
+
+declare global {
+  // 全局声明
+  type IQuizList = {
+    userName: string;
+    userSubmits: IUserSubmitList;
+  }[];
+}
+```
+
+**4. 如果想导入其他类型声明，又不希望变成模块，可以使用编译器指令 reference**
+
+```ts title="type.d.ts"
+/// <reference types="node">
+
+// 全局声明
+type DataType = {
+  name: string;
+  age: number;
+}
+```
 
 [TypeScript 深水区：3 种类型来源和 3 种模块语法](https://juejin.cn/post/7111112135903543332)
 
