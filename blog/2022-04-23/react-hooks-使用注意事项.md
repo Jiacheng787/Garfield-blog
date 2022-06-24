@@ -49,6 +49,7 @@ setCount(count + 1);
 setCount(count + 1);
 
 // 如果要获取到上一次更新的值，可以使用函数式更新
+// 实际上函数式更新还能避免闭包陷阱
 // 最终 count 为 2
 setCount(c => c + 1);
 setCount(c => c + 1);
@@ -56,11 +57,14 @@ setCount(c => c + 1);
 
 ## useEffect 相关
 
+建议不要在组件上下文中放一些比较重的逻辑，不然会阻塞渲染。比较好的做法是放到 `useEffect` 里面，在组件渲染后异步执行，不阻塞页面渲染。
+
 :::tip
 
 `useEffect` 与 `useLayoutEffect` 的区别：
 
-`useLayoutEffect` 在 **组件渲染前同步执行**，`useEffect` 在 **组件渲染后异步执行**。
+- `useLayoutEffect` 在 **组件渲染前同步执行**，会阻塞页面渲染，可以获取更新前的 DOM 元素
+- `useEffect` 在 **组件渲染后异步执行**，不阻塞页面渲染，可以获取更新后的 `state` 以及 DOM 元素
 
 :::
 
@@ -359,6 +363,12 @@ function Index({ value }){
   )
 }
 ```
+
+:::tip
+
+建议 `useMemo` **只用于性能优化，不要与逻辑耦合**。记得之前看过一篇文章讲实现一个 Babel 插件，移除代码中的 `useMemo`，用来确保即使 `useMemo` 移除后，代码逻辑还是不变。
+
+:::
 
 ## 自定义 hook 相关
 
