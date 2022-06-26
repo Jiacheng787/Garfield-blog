@@ -73,7 +73,11 @@ this.setState((prevState, prevProps) => ({
 
 与函数组件类似，类组件中与视图渲染无关的变量，也不应该放在 `state` 中，而是作为普通实例属性，否则每次 `setState` 都会触发组件 rerender，进而引起性能问题。
 
-## 5. 注意事件处理函数的 `this` 绑定问题
+## 5. 类组件如何获取更新后的状态
+
+与函数组件类似，类组件 `setState` 也是异步的（在事件处理函数上下文中）。在函数组件中，`useEffect` 是组件更新后异步执行，可以获取到更新后的状态，在类组件中，有两个地方可以获取更新后的状态，一个是 `setState` 回调函数，另一个是 `componentDidUpdate` 钩子。
+
+## 6. 注意事件处理函数的 `this` 绑定问题
 
 一般标准的写法是这样：
 
@@ -166,7 +170,7 @@ class MyCompoment extends React.Component {
 
 -->
 
-## 6. 关于 `this` 的几个注意点
+## 7. 关于 `this` 的几个注意点
 
 ### 1) 箭头函数中 `this` 指向能否改变
 
