@@ -39,6 +39,10 @@ npm 包的依赖有哪些分类：
 
 NPM 发包需要仔细分割依赖，如果目标环境存在，就放在 `peerDependencies` 下面，如果目标环境不存在，则放在 `dependencies` 下面，如果 `devDependencies` 存在运行时依赖，则直接打包进去。在发包的时候，可以直接移除 `scripts` （如果不需要在目标环境执行 postinstall 之类的脚本）和 `devDependencies`。
 
+第三方库 `peerDependencies` 和 `dependencies` 没有仔细分割开，后果非常严重。例如 `react` 本来应该放 `peerDependencies`，结果放到 `dependencies` 下面，会导致业务工程 `react` 重复安装，出现两个版本的 `react`，破坏单例模式，最终导致 Runtime Exception。反过来如果应该放在 `dependencies` 下面，实际放在 `peerDependencies` 下面，会导致业务工程依赖缺失，打包构建阶段会报错。
+
+例如业务工程是一个 umi 项目，那么组件库中 `react`、`react-dom`、`antd`、`dva`、`umi-request` 等都可以作为 `peerDependencies`。
+
 [关于前端大管家 package.json，你知道多少？](https://mp.weixin.qq.com/s/fxX4oPHURDpvFvCIZUd7VA)
 
 [这还是我最熟悉的package.json吗？](https://juejin.cn/post/6953867408096362503)
