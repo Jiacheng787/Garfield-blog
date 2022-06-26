@@ -443,6 +443,41 @@ import * as React from "react";
 
 ### 2) 如何声明 React 组件
 
+**1. 不需要使用 `props` 和 `children`**
+
+```tsx
+import * as React from "react";
+
+const App: React.FC = () => {
+  return (
+    <div>2333</div>
+  ) 
+}
+
+export default React.memo(App);
+```
+
+**2. 使用 `props`**
+
+```tsx
+import * as React from "react";
+
+type IProps = {
+  foo: string;
+  bar: number;
+}
+
+const App: React.FC<IProps> = ({ foo, bar }) => {
+  return (
+    <div>2333</div>
+  )
+}
+
+export default React.memo(App);
+```
+
+**3. 使用 `props` 和 `children`**
+
 ```tsx
 import * as React from "react";
 
