@@ -8,6 +8,42 @@ tags: []
 
 <!--truncate-->
 
+## 前言
+
+### 1) 依赖项使用注意事项
+
+哪些变量应该放进依赖项里面：
+
+- 与视图渲染有关的变量，例如 `props`、`state`、`context`
+- 一些派生的状态，例如 `useCallback`、`useMemo` 的返回值
+
+哪些不应该放进依赖项里面：
+
+- 与视图渲染无关的变量，例如 `ref`
+
+> 这是因为 `useRef` 返回的引用在整个组件生命周期中保持不变，不存在闭包陷阱问题
+
+### 2) React 性能优化策略
+
+引起组件更新的因素：
+
+- props（包括父组件 rerender 引起子组件 rerender）
+- state（在组件内部 `setState` 触发调度更新）
+- context（全局状态改变，通知订阅状态的组件更新）
+
+在不做任何优化的情况下，即使 props 没有改变，但是如果父组件 rerender，会导致子组件 props 对象重新生成，由于 React 默认的性能优化策略是 props **严格相等比较**，所以不可避免地导致子组件以及所有的子孙组件 rerender。
+
+> **严格相等比较** 高效但是难命中，只有当前组件没有 rerender 才能保证后续组件树都不 rerender
+
+使用了 `React.memo` 之后，会改为对 props 进行 **浅比较**，这样可以避免一些不必要的 rerender。
+
+> **浅比较** 容易命中但是有一定性能开销，因为需要遍历对象
+
+### 3) 如何排查组件 rerender
+
+- 使用 ahooks 提供的 `useWhyDidYouUpdate`
+- 使用 react devtool，点击 profiler 面板上的齿轮，然后勾选「Record why each component rendered while profiling.」
+
 ## useState 相关
 
 惰性初始化 State：
