@@ -67,18 +67,18 @@ const [count, setCount] = React.useState(0);
  * 但是 React 会对状态更新进行批处理
  * 保证连续调用 setCount，状态只更新一次
  * 防止组件频繁 rerender
- * 
+ *
  * 调用 setCount 之后并不会立即更新 count
  * 所以第二次 setCount 的时候，count 值仍然是 0
- * 
+ *
  * 例如：
  * setCount(count + 1);
  * console.log(count); // 0
- * 
+ *
  * 所以下面的代码等价于：
  * setCount(0 + 1);
  * setCount(0 + 1);
- * 
+ *
  * 因此最终 count 还是 1
  */
 setCount(count + 1);
@@ -87,8 +87,8 @@ setCount(count + 1);
 // 如果要获取到上一次更新的值，可以使用函数式更新
 // 实际上函数式更新还能避免闭包陷阱
 // 最终 count 为 2
-setCount(c => c + 1);
-setCount(c => c + 1);
+setCount((c) => c + 1);
+setCount((c) => c + 1);
 ```
 
 ## useEffect 相关
@@ -106,7 +106,131 @@ setCount(c => c + 1);
 
 :::
 
-`useEffect` 清除副作用：
+### 1) `useEffect` 实现优雅异步获取数据
+
+考虑一个常见的需求，前端需要展示一个列表，这个列表支持分页、排序，同时还能下拉筛选、搜索等。
+
+实现的思路显然就是使用 `useEffect` 「监听」这些 state 变化，然后重新发起网络请求。我们知道 `useEffect` 的回调函数不能写成 `async` 函数（只能返回 `undefined` 或者 cleanup 函数），这种情况下我们只能这样写：
+
+```tsx
+useEffect(() => {
+  $getTableData().then((res) => {
+    setData(res);
+  });
+}, []);
+
+// 或者
+useEffect(() => {
+  (async () => {
+    const res = await $getTableData();
+    setData(res);
+  })();
+}, []);
+```
+
+当逻辑很多的时候，我们会考虑单独抽提函数：
+
+```tsx
+const fetchData = async () => {
+  const res = await $getTableData({
+    pageSize, // 每页条数
+    pageNum, // 当前页数
+    asc, // 是否升序
+    dropdown, // 下拉筛选
+    searchText, // 搜索框
+  });
+  setData(res);
+};
+
+useEffect(() => {
+  fetchData();
+}, [pageSize, pageNum, asc, dropdown, searchText]);
+```
+
+上面这样写，逻辑上是没问题，但是这些依赖项都没有指向性。这里推荐个人觉得比较好的方式：
+
+```tsx
+const fetchData = useCallback(async () => {
+  const res = await $getTableData({
+    pageSize, // 每页条数
+    pageNum, // 当前页数
+    asc, // 是否升序
+    dropdown, // 下拉筛选
+    searchText, // 搜索框
+  });
+  setData(res);
+}, [pageSize, pageNum, asc, dropdown, searchText]);
+
+useEffect(() => {
+  fetchData();
+}, [fetchData]);
+```
+
+:::tip
+
+把 `fetchData` 用 `useCallback` 包裹一下，依赖项都传给 `useCallback`，这样就比较白盒。
+
+同时 `useEffect` 不用关心这些依赖项，只要关心 `fetchData` 函数是否重新生成，如果重新生成（说明依赖项改变），那么就重新发起请求。
+
+:::
+
+上面这样写显然会有很多模板代码，可以把逻辑封装为一个自定义 hook：
+
+```tsx
+export const useRequest = <T extends {}>(
+  fn: () => Promise<T>,
+  deps: React.DependencyList = []
+) => {
+  const [result, setResult] = React.useState<T>();
+
+  const fetchData = React.useCallback(async () => {
+    const result = await fn();
+    setResult(result);
+  }, deps);
+
+  React.useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  return result;
+};
+```
+
+有时候我们可能不只调用一个接口，而是需要串行调用多个接口，还可以再封装一个更加抽象的 hook：
+
+```tsx
+export const useAsync = (
+  fn: () => Promise<any>,
+  deps: React.DependencyList = []
+) => {
+  const fetchData = React.useCallback(fn, deps);
+
+  React.useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+};
+```
+
+:::tip
+
+注意，以上只是一个简单的 demo，实际要考虑的问题有很多：
+
+- **竞态条件**：网络请求存在不确定性，例如短时间内发两个请求，后一个先响应，页面渲染，然后过一会前一个响应，把上一次渲染的内容给覆盖了（开发阶段很难复现，React 18 严格模式下会强制组件重复挂载两次放大这个问题）
+- **内存泄漏**：请求发出后组件就卸载了，请求响应之后如果继续调用 `setState` 更新已卸载组件的状态，会导致内存泄漏
+
+推荐阅读：
+
+https://beta.reactjs.org/learn/synchronizing-with-effects#fetching-data
+
+https://beta.reactjs.org/learn/you-might-not-need-an-effect#fetching-data
+
+推荐看一下 `react-use` 中 `useAsync` 的源码：
+
+https://github.com/streamich/react-use/blob/master/src/useAsync.ts
+
+:::
+
+### 2) `useEffect` 清除副作用
 
 ```jsx
 React.useEffect(() => {
@@ -117,7 +241,7 @@ React.useEffect(() => {
     // 1. 组件更新的时候执行（依赖项数组不为空 && 依赖项改变）
     // 2. 组件卸载的时候执行
     // 用于清理各种事件监听器、定时器等
-  }
+  };
 }, []);
 ```
 
@@ -134,12 +258,12 @@ const LineChart = (props) => {
     const chart = echarts.init(chartRef.current);
     const option = {
       // ...
-    }
+    };
     chart.setOptions(option);
 
     const handleResize = () => {
       chart.resize();
-    }
+    };
 
     // 绑定 resize 事件监听器
     window.addEventListener("resize", handleResize);
@@ -147,11 +271,11 @@ const LineChart = (props) => {
     return () => {
       // 组件更新或者卸载时移除监听
       window.removeEventListener("resize", handleResize);
-    }
-  }, [props])
-  
-  return <div ref={chartRef} className="chart"></div>
-}
+    };
+  }, [props]);
+
+  return <div ref={chartRef} className="chart"></div>;
+};
 
 export default React.memo(LineChart);
 ```
@@ -168,7 +292,7 @@ export default React.memo(LineChart);
 
 :::
 
-如何理解 React Hooks 的闭包陷阱
+### 3) 如何理解 React Hooks 的闭包陷阱
 
 函数组件更新，实际上就是函数重新执行，生成一个新的执行上下文，所有变量、函数重新创建，hooks 重新执行。
 
@@ -179,7 +303,7 @@ function bar() {
   const a = 1;
   return function baz() {
     console.log(a);
-  }
+  };
 }
 
 const foo = bar();
@@ -207,7 +331,7 @@ const foo = bar();
 
 另外 React 官方团队有一个关于 `useEvent` 的 RFC，用于解决事件处理函数的闭包陷阱问题。很多开源 Hooks 库已经实现类似功能（比如 ahooks 中的 `useMemoizedFn`），`useEvent` 定位于 **处理事件回调函数** 这一单一场景，在 React 18 并发渲染下可以确保稳定更新。
 
-[React官方团队出手，补齐原生Hook短板](https://juejin.cn/post/7094424941541457933)
+[React 官方团队出手，补齐原生 Hook 短板](https://juejin.cn/post/7094424941541457933)
 
 :::
 
@@ -237,18 +361,16 @@ const foo = bar();
 
 ```tsx
 const App: React.FC<{}> = () => {
-	// count 与视图渲染无关
-	// 如果使用 useState，每次 count 变化都会触发组件重新渲染
-	const [count, setCount] = React.useState(0);
-	// 这里推荐使用 useRef
-	const count = React.useRef(0);
+  // count 与视图渲染无关
+  // 如果使用 useState，每次 count 变化都会触发组件重新渲染
+  const [count, setCount] = React.useState(0);
+  // 这里推荐使用 useRef
+  const count = React.useRef(0);
 
-	const handleClick = () => setCount(c => c + 1);
+  const handleClick = () => setCount((c) => c + 1);
 
-	return (
-		<button onClick={handleClick}>Counter</button>
-	)
-}
+  return <button onClick={handleClick}>Counter</button>;
+};
 ```
 
 对于一些表单 UI，如果要实现受控组件，通常与 `useState` 进行绑定：
@@ -257,10 +379,8 @@ const App: React.FC<{}> = () => {
 const App: React.FC<{}> = () => {
   const [num, setNum] = React.useState(1);
 
-  return (
-    <InputNumber value={num} onChange={setNum} />
-  )
-}
+  return <InputNumber value={num} onChange={setNum} />;
+};
 ```
 
 在 Vue 项目中，涉及到表单 UI，一般都是直接全部进行数据绑定，但是在 React 中并不一定都要数据绑定：
@@ -273,12 +393,10 @@ const App: React.FC<{}> = () => {
 
   const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
     inputRef.current = e.target.value;
-  }
+  };
 
-  return (
-    <Input onChange={handleInputChange} />
-  )
-}
+  return <Input onChange={handleInputChange} />;
+};
 ```
 
 :::tip
@@ -340,14 +458,14 @@ function MyApp() {
 
 ```tsx
 const List: React.FC<{}> = () => {
-  const { tableData } = useSelector(state => state.tableData);
+  const { tableData } = useSelector((state) => state.tableData);
   const dispatch = useDispatch<AppDispatch>();
 
   const [searchText, setSearchText] = React.useState("");
 
   // 将 useMemo 作为计算属性，添加 tableData 和 searchText 两个依赖项
   const dataSource = React.useMemo(() => {
-    return tableData.filter(item => item.name.includes(searchText));
+    return tableData.filter((item) => item.name.includes(searchText));
   }, [tableData, searchText]);
 
   // 当切换下拉框选项时，触发 handleSelectChange
@@ -359,7 +477,7 @@ const List: React.FC<{}> = () => {
   // 进而实现切换下拉框更新列表的功能
   const handleSelectChange = (value: string) => {
     dispatch(setTableDataAction(value));
-  }
+  };
 
   // 当搜索框输入内容时，触发 handleInputChange
   // 由于 searchText 被添加到 useMemo 依赖项中
@@ -367,7 +485,7 @@ const List: React.FC<{}> = () => {
   // 进而实现搜索当前列表功能
   const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
-  }
+  };
 
   return (
     <div>
@@ -377,19 +495,16 @@ const List: React.FC<{}> = () => {
         </Select>
         <Input onChange={handleInputChange} />
       </div>
-      <Table
-        columns={columns}
-        dataSource={dataSource}
-      />
+      <Table columns={columns} dataSource={dataSource} />
     </div>
-  )
-}
+  );
+};
 ```
 
 但实际上 `useMemo` 比计算属性更强大，除了缓存值之外，还能缓存组件：
 
 ```jsx
-function Index({ value }){
+function Index({ value }) {
   const [number, setNumber] = React.useState(0);
   const element = React.useMemo(() => <Test />, [value]);
 
@@ -398,7 +513,7 @@ function Index({ value }){
       {element}
       <button onClick={() => setNumber(number + 1)}>点击 {number}</button>
     </div>
-  )
+  );
 }
 ```
 
