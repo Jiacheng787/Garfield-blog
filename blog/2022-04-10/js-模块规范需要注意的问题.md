@@ -123,9 +123,11 @@ import foo from 'modules';
 
 ## 3. 如何理解 Node.js 模块
 
-一个模块实际上可以看做一个 `once` 函数，头部的 `require` 命令可以看做入参，`module.exports` 可以看做返回值。
+一个模块实际上可以看做 **一个 `once` 函数**，头部的 `require` 命令可以看做入参，`module.exports` 可以看做返回值。
 
 当首次加载一个模块的时候，就会运行这个模块代码，可以看做是调用一个函数，执行结束后得到导出的内容并被缓存，可以看做函数返回一个值。当再次加载这个模块，不再执行这个模块代码，而是直接从缓存中取值。
+
+<!--
 
 ```js
 // foo.js
@@ -144,7 +146,52 @@ const foo = require("./foo.js");
 foo.run();
 ```
 
-因此，使用 `import` 或者 `require` 导入模块时，如果没有加载过该模块，会 **先执行模块代码**，然后 **缓存并返回导出内容**。有时候，我们只需要执行模块代码，无需获取导出内容，就可以这样写：
+-->
+
+我们可以看一下 `__webpack_require__` 加载函数源码，深入理解模块加载机制：
+
+```js
+// The module cache
+var __webpack_module_cache__ = {};
+
+// The require function
+function __webpack_require__(moduleId) {
+  // 如果模块已加载，不再重复执行模块函数，直接返回导出值
+  var cachedModule = __webpack_module_cache__[moduleId];
+  if (cachedModule !== undefined) {
+    return cachedModule.exports;
+  }
+  // Create a new module (and put it into the cache)
+  var module = __webpack_module_cache__[moduleId] = {
+    id: moduleId,
+    loaded: false,
+    exports: {}
+  };
+
+  // 如果首次加载模块，首先执行模块函数
+  __webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+
+  // Flag the module as loaded
+  module.loaded = true;
+
+  // 模块函数执行结束，缓存并返回导出内容
+  return module.exports;
+}
+```
+
+因此，使用 `import` 或者 `require` 导入模块时，如果没有加载过该模块，会 **先执行模块代码**，然后 **缓存并返回导出内容**。
+
+```js
+// 执行模块代码（如果没有加载过该模块），并获取导出内容
+import ReactDOM from "react-dom";
+const ReactDOM = require("react-dom");
+
+// 仅仅执行模块代码（如果没有加载过该模块）
+import "react-dom";
+require("react-dom");
+```
+
+有时候，我们只需要执行模块代码，无需获取导出内容，就可以这样写：
 
 ```js
 require("./dist/main.js");
