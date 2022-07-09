@@ -200,7 +200,7 @@ export const useRequest = <T extends {}>(
 
 ```tsx
 export const useAsync = (
-  fn: () => Promise<any>,
+  fn: () => Promise<void>,
   deps: React.DependencyList = []
 ) => {
   const fetchData = React.useCallback(fn, deps);
@@ -217,6 +217,27 @@ export const useAsync = (
 
 - **竞态条件**：网络请求存在不确定性，例如短时间内发两个请求，后一个先响应，页面渲染，然后过一会前一个响应，把上一次渲染的内容给覆盖了（开发阶段很难复现，React 18 严格模式下会强制组件重复挂载两次放大这个问题）
 - **内存泄漏**：请求发出后组件就卸载了，请求响应之后如果继续调用 `setState` 更新已卸载组件的状态，会导致内存泄漏
+- **缓存数据**：例如用户点击返回按钮查看上一页，可以先用缓存数据渲染页面，而无需等待接口返回再渲染
+- **SSR 渲染**：在服务器端（Node 环境）获取数据，这个意义上来说，`axios` 就做得很好，同时支持浏览器和 Node 环境，另外现在 Node 已经支持 `fetch API` 应该也是为了更好地支持 SSR 渲染
+- **瀑布问题**：如果组件都依赖 `useEffect` 获取数据，整个渲染流程就是这样：父组件挂载 -> 父组件 `useEffect` 执行，请求数据 -> 接口响应后重新渲染父组件 -> 子组件挂载 -> 子组件 `useEffect` 执行，请求数据 -> 接口响应后重新渲染子组件。这种情况下，子组件需要等待父组件接口响应、渲染完成后再去调接口
+
+对于 **竞态条件** 问题，React 官方给了一个解决方案。虽然已经发出的网络请求不能 undo，但是可以丢弃响应数据。下面代码可以保证，短时间内发出多个网络请求（此时都还未响应），只取最后一个请求的响应数据：
+
+```tsx {2,4,9}
+useEffect(() => {
+  let ignore = false;
+  fetchResults(query, page).then(json => {
+    if (!ignore) {
+      setResults(json);
+    }
+  });
+  return () => {
+    ignore = true;
+  };
+}, [query, page]);
+```
+
+综上，React 官方实际上更推荐使用 `swr`、`react-query` 获取数据，比自己在 `useEffect` 里面调接口更高效。
 
 推荐阅读：
 
