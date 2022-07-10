@@ -248,8 +248,16 @@ https://github.com/remix-run/react-router
 这里解释一下这三个库分别是干什么的：
 
 - Redux：核心库
-- React Redux：Redux 的 UI-binding，即 Redux 结合 React 使用的库。也就是说，Redux 只负责存储全局状态，暴露访问、修改状态的方法，但无法在状态改变的时候更新 UI。React Redux 可以进行依赖收集，订阅状态变化，在状态改变的时候通知 UI 更新
-- Redux Toolkit：让 Redux 用得更爽，可以减少模板代码
+- React Redux：Redux 的 UI-binding，即 Redux 结合 React 使用的库。也就是说，Redux 只负责存储全局状态，暴露访问、修改状态的方法，但无法在状态改变的时候更新 UI。React Redux 可以进行依赖收集，订阅状态变化，在状态改变的时候通知 UI 更新。例如 `connect`、`useSelector`、`useDispatch` 等都由 React Redux 提供
+- Redux Toolkit：让 Redux 用得更爽，可以减少模板代码。不再需要刻意关心如何组织编写 Reducer、Action creator、Action Type 等内容，同时，默认就融合支持 异步 Thunks
+
+[用 Redux 做状态管理，真的很简单🦆](https://juejin.cn/post/7071066976830881823)
+
+Usage With TypeScript - Redux Toolkit
+
+https://redux-toolkit.js.org/usage/usage-with-typescript
+
+https://redux.js.org/introduction/why-rtk-is-redux-today
 
 ## 5. 🚧 CSS 工程化指南
 
@@ -320,6 +328,16 @@ CRA 内置了 PostCSS Normalize（相比 normalize.css 增加了根据 browsersl
 
 - [React-transition-group](https://github.com/reactjs/react-transition-group)
 - [React-spring](https://github.com/pmndrs/react-spring)
+
+### 5) 拖拽库
+
+- [React-dnd](https://github.com/react-dnd/react-dnd)
+- [react-beautiful-dnd](https://github.com/atlassian/react-beautiful-dnd)
+
+### 6) 其他
+
+- [bytemd - 字节出品的 markdown 编辑器](https://github.com/bytedance/bytemd)
+- [guide - 字节出品的 React 新手引导组件](https://github.com/bytedance/guide)
 
 [20个GitHub仓库助你成为React大师](https://juejin.cn/post/7104460511869141006)
 
