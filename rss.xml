@@ -4,10 +4,18 @@
         <title>Garfield's Blog Blog</title>
         <link>https://your-docusaurus-test-site.com/Garfield-blog/</link>
         <description>Garfield's Blog Blog</description>
-        <lastBuildDate>Sun, 10 Jul 2022 15:34:00 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 10 Jul 2022 15:42:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Webpack5 Module Federaction]]></title>
+            <link>https://your-docusaurus-test-site.com/Garfield-blog/webpack5-module-federaction</link>
+            <guid>webpack5-module-federaction</guid>
+            <pubDate>Sun, 10 Jul 2022 15:42:00 GMT</pubDate>
+            <description><![CDATA[Module Federation最佳实践]]></description>
+            <content:encoded><![CDATA[<p><a href="https://mp.weixin.qq.com/s/pT_tugg_EvE5pnMCaUqliw" target="_blank" rel="noopener noreferrer">Module Federation最佳实践</a></p><p><a href="https://mp.weixin.qq.com/s/LL6VZj36PKftbwaybBFmXg" target="_blank" rel="noopener noreferrer">一文带你进入微前端世界</a></p><p><a href="https://mp.weixin.qq.com/s/yu1tKtwneoTI9eSGS4us-g" target="_blank" rel="noopener noreferrer">我们是怎么在项目中落地qiankun的</a></p><p><a href="https://juejin.cn/post/7101457212085633054" target="_blank" rel="noopener noreferrer">模块联邦浅析</a></p><p><a href="https://mp.weixin.qq.com/s/ovwjufnPmCoYNLMkv5xv2g" target="_blank" rel="noopener noreferrer">【第2618期】手把手教你定制一套适合团队的微前端体系</a></p><p><a href="https://mp.weixin.qq.com/s/zt7x2KjMT_cWvLVVa2-Hww" target="_blank" rel="noopener noreferrer">【工程化】探索webpack5中的Module Federation</a></p>]]></content:encoded>
+        </item>
         <item>
             <title><![CDATA[UMI 源码系列文章]]></title>
             <link>https://your-docusaurus-test-site.com/Garfield-blog/umi-源码系列文章</link>

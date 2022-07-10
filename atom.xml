@@ -2,11 +2,23 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://your-docusaurus-test-site.com/Garfield-blog/</id>
     <title>Garfield's Blog Blog</title>
-    <updated>2022-07-10T15:34:00.000Z</updated>
+    <updated>2022-07-10T15:42:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://your-docusaurus-test-site.com/Garfield-blog/"/>
     <subtitle>Garfield's Blog Blog</subtitle>
     <icon>https://your-docusaurus-test-site.com/Garfield-blog/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Webpack5 Module Federaction]]></title>
+        <id>webpack5-module-federaction</id>
+        <link href="https://your-docusaurus-test-site.com/Garfield-blog/webpack5-module-federaction"/>
+        <updated>2022-07-10T15:42:00.000Z</updated>
+        <summary type="html"><![CDATA[Module Federation最佳实践]]></summary>
+        <content type="html"><![CDATA[<p><a href="https://mp.weixin.qq.com/s/pT_tugg_EvE5pnMCaUqliw" target="_blank" rel="noopener noreferrer">Module Federation最佳实践</a></p><p><a href="https://mp.weixin.qq.com/s/LL6VZj36PKftbwaybBFmXg" target="_blank" rel="noopener noreferrer">一文带你进入微前端世界</a></p><p><a href="https://mp.weixin.qq.com/s/yu1tKtwneoTI9eSGS4us-g" target="_blank" rel="noopener noreferrer">我们是怎么在项目中落地qiankun的</a></p><p><a href="https://juejin.cn/post/7101457212085633054" target="_blank" rel="noopener noreferrer">模块联邦浅析</a></p><p><a href="https://mp.weixin.qq.com/s/ovwjufnPmCoYNLMkv5xv2g" target="_blank" rel="noopener noreferrer">【第2618期】手把手教你定制一套适合团队的微前端体系</a></p><p><a href="https://mp.weixin.qq.com/s/zt7x2KjMT_cWvLVVa2-Hww" target="_blank" rel="noopener noreferrer">【工程化】探索webpack5中的Module Federation</a></p>]]></content>
+        <author>
+            <name>加菲猫</name>
+            <uri>https://github.com/Jiacheng787</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[UMI 源码系列文章]]></title>
         <id>umi-源码系列文章</id>
