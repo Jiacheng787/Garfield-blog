@@ -495,6 +495,15 @@ const App: React.FC<IProps> = ({ foo, bar, children }) => {
 export default React.memo(App);
 ```
 
+:::tip
+
+注意两点：
+
+- 在 `.tsx` 文件中使用泛型会被识别为 JSX 标签，这种情况下需要写成 `<T extends {}>` 消除歧义
+- React 组件中的内部 props，不能随意使用：`key`、`ref`、`children`
+
+:::
+
 ## 9. CRA 项目非跟路径部署的正确姿势
 
 项目中需要使用一个子路径部署页面，例如 `/tclient`。此时 HTML 入口文件中所有的资源地址都要改成从 `/tclient` 路径下去访问。
