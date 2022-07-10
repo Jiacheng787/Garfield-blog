@@ -2,11 +2,23 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://your-docusaurus-test-site.com/Garfield-blog/</id>
     <title>Garfield's Blog Blog</title>
-    <updated>2022-07-10T11:40:00.000Z</updated>
+    <updated>2022-07-10T15:34:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://your-docusaurus-test-site.com/Garfield-blog/"/>
     <subtitle>Garfield's Blog Blog</subtitle>
     <icon>https://your-docusaurus-test-site.com/Garfield-blog/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[UMI 源码系列文章]]></title>
+        <id>umi-源码系列文章</id>
+        <link href="https://your-docusaurus-test-site.com/Garfield-blog/umi-源码系列文章"/>
+        <updated>2022-07-10T15:34:00.000Z</updated>
+        <summary type="html"><![CDATA[UMI3源码解析系列之核心service类初始化]]></summary>
+        <content type="html"><![CDATA[<p><a href="https://mp.weixin.qq.com/s/f8mYoozpLrnSfWcRHTMa7A" target="_blank" rel="noopener noreferrer">UMI3源码解析系列之核心service类初始化</a></p><p><a href="https://mp.weixin.qq.com/s/y-6Uf1hNBF19MabHEtqnJA" target="_blank" rel="noopener noreferrer">UMI3源码解析系列之插件化架构核心</a></p><p><a href="https://mp.weixin.qq.com/s/4cZ3rJz4P5bSRSeXDbFoMQ" target="_blank" rel="noopener noreferrer">UMI3源码解析系列之运行时插件机制</a></p><p><a href="https://mp.weixin.qq.com/s/2MsgPh9AZtUoJpsLLdOynQ" target="_blank" rel="noopener noreferrer">UMI3源码解析系列之构建原理</a></p><p><a href="https://mp.weixin.qq.com/s/Sz8u6lzkL1nnpRxGrdbYJg" target="_blank" rel="noopener noreferrer">如何华丽的实现一套脚手架 - 以umicli和转转zzcli为例</a></p><p><a href="https://www.yuque.com/antfe/featured/uf1bok" target="_blank" rel="noopener noreferrer">Umi 4 特性 05：稳定白盒性能好的 ESLint</a></p>]]></content>
+        <author>
+            <name>加菲猫</name>
+            <uri>https://github.com/Jiacheng787</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[学习路线汇总]]></title>
         <id>学习路线汇总</id>
