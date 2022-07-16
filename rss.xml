@@ -4,10 +4,18 @@
         <title>Garfield's Blog Blog</title>
         <link>https://your-docusaurus-test-site.com/Garfield-blog/</link>
         <description>Garfield's Blog Blog</description>
-        <lastBuildDate>Sun, 10 Jul 2022 15:42:00 GMT</lastBuildDate>
+        <lastBuildDate>Sat, 16 Jul 2022 22:58:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[搭建业务组件库]]></title>
+            <link>https://your-docusaurus-test-site.com/Garfield-blog/搭建业务组件库</link>
+            <guid>搭建业务组件库</guid>
+            <pubDate>Sat, 16 Jul 2022 22:58:00 GMT</pubDate>
+            <description><![CDATA[为什么搭建业务组件库]]></description>
+            <content:encoded><![CDATA[<p>为什么搭建业务组件库</p><ul><li>跨项目复用</li><li>组件使用文档</li><li>跨团队共建发展</li></ul><p><a href="https://juejin.cn/post/7120893568553582622" target="_blank" rel="noopener noreferrer">快上车！搭建一个属于自己的组件库！</a></p>]]></content:encoded>
+        </item>
         <item>
             <title><![CDATA[Webpack5 Module Federaction]]></title>
             <link>https://your-docusaurus-test-site.com/Garfield-blog/webpack5-module-federaction</link>
