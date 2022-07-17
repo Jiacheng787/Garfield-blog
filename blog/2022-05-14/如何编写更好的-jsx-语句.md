@@ -8,7 +8,7 @@ tags: []
 
 <!--truncate-->
 
-列表不为空的时候进行渲染：
+## 列表不为空的时候进行渲染
 
 ```jsx
 // 注意这种写法有 bug
@@ -27,7 +27,7 @@ Boolean(data.length) && jsx
 
 :::
 
-不要使用 `props` 传递的 React 元素作为判断条件:
+## 不要使用 `props` 传递的 React 元素作为判断条件
 
 ```jsx
 // 这样的判断不准确
@@ -50,7 +50,7 @@ const Wrap = (props) => {
 
 :::
 
-重新挂载还是更新：
+## 重新挂载还是更新
 
 ```jsx
 // 使用三元运算符分支编写的 JSX 看上去就像完全独立的代码
@@ -94,5 +94,133 @@ const Wrap = (props) => {
 {loading && <Button key="submit" aria-busy><Spinner /></Button>}
 {!loading && <Button key="submit" onClick={submit}>submit</Button>}
 ```
+
+## 优雅实现条件渲染
+
+首先先准备两个组件：
+
+```tsx
+const Teach: React.FC = () => {
+	return <div>2333</div>
+}
+
+const Study: React.FC = () => {
+	return <div>666</div>
+}
+```
+
+通常处理条件渲染我们是这样做的：
+
+```tsx
+enum DisplayTypeEnum {
+  TEACH = 1,
+  LEARN,
+}
+
+type IProps = {
+	displayType: DisplayTypeEnum;
+}
+
+const App: React.FC<IProps> = ({ displayType }) => {
+  return (
+    <div>
+      {
+        displayType === DisplayTypeEnum.TEACH
+        ? <Teach />
+        : displayType === DisplayTypeEnum.LEARN
+          ? <Study />
+          : null
+      }
+    </div>
+  )
+}
+```
+
+如果需要判断的条件很多，上面这样会导致代码难以维护，我们可以使用策略模式优化代码：
+
+```tsx
+const App: React.FC<IProps> = ({ displayType }) => {
+  // 注意，这里有个坑
+  const mapper = {
+    [DisplayTypeEnum.TEACH]: <Teach />,
+    [DisplayTypeEnum.LEARN]: <Study />
+  }
+
+  return <div>{mapper[displayType]}</div>
+}
+```
+
+上面这样写，看起来没问题，但实际上有个坑，在条件渲染的场景下，我们只需要 **挂载需要渲染的组件**，但是上面这样的结果，`mapper` 中所有组件都挂载了，即使不需要用于页面渲染，可能会导致性能问题。我们可以看一下编译后的结果：
+
+```tsx
+const App = ({
+  displayType
+}) => {
+  const mapper = {
+    [DisplayTypeEnum.TEACH]: /*#__PURE__*/React.createElement(Teach, null),
+    [DisplayTypeEnum.LEARN]: /*#__PURE__*/React.createElement(Study, null)
+  };
+  return /*#__PURE__*/React.createElement("div", null, mapper[displayType]);
+};
+```
+
+:::tip
+
+当我们把组件写成 `<Teach />` 形式，会编译成 `React.createElement(Teach, null)` 调用的形式，这实际上就是在挂载组件。
+
+那为啥上面我们写条件判断的时候没有这个问题呢？这是因为条件判断如果为假，根本不会执行 `React.createElement()` 函数，因此条件判断是按需挂载的。
+
+:::
+
+因此，这种情况下，我们需要延迟组件的挂载。延迟挂载最简单的方法就是不写成 `<Teach />` 形式：
+
+```tsx
+const App: React.FC<IProps> = ({ displayType }) => {
+  const mapper = {
+    [DisplayTypeEnum.TEACH]: Teach,
+    [DisplayTypeEnum.LEARN]: Study
+  }
+
+  const Comp = mapper[displayType]
+
+  // 延迟组件挂载，到渲染的时候再去挂载组件
+  return <div><Comp /></div>
+}
+```
+
+假如不写成标签形式，可能看不出来这是组件，这边推荐一种比较好的做法，保留 JSX 标签形式，但是包裹一层函数实现组件延迟挂载：
+
+```tsx
+const App: React.FC<IProps> = ({ displayType }) => {
+  const mapper = {
+    [DisplayTypeEnum.TEACH]: (props) => <Teach {...props} />,
+    [DisplayTypeEnum.LEARN]: (props) => <Study {...props} />
+  }
+
+  const Comp = mapper[displayType]
+
+  return <div><Comp /></div>
+}
+```
+
+更进一步，由于我们已经实现了组件延迟挂载，因此可以把 `mapper` 抽提到组件外面，避免组件每次 rerender 都重新生成：
+
+```tsx
+const mapper = {
+  [DisplayTypeEnum.TEACH]: (props) => <Teach {...props} />,
+  [DisplayTypeEnum.LEARN]: (props) => <Study {...props} />
+}
+
+const App: React.FC<IProps> = ({ displayType }) => {
+  const Comp = mapper[displayType]
+
+  return <div><Comp /></div>
+}
+```
+
+综上，当我们把组件写成 JSX 标签，会编译为 `React.createElement()` 调用的形式，这实际上就是在挂载组件。在条件渲染场景下，我们需要实现组件延迟挂载，即只在渲染的时候挂载需要的组件。实现组件延迟挂载，最简单的方式就是不用 JSX 标签，例如 `Teach`，此外还可以包裹一层函数实现延迟挂载，例如 `() => <Teach />`，但是要注意，直接 `<Teach />` 这样写是不对的。
+
+
+## 参考
 
 [写好 JSX 条件语句的几个建议](https://mp.weixin.qq.com/s/1BX5xK0wpUDBSininJbYHw)
