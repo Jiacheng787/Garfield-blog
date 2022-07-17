@@ -345,6 +345,8 @@ CRA 内置了 PostCSS Normalize（相比 normalize.css 增加了根据 browsersl
 
 ## 7. 🚧 React 性能优化指南
 
+[如何在React中应用SOLID原则](https://mp.weixin.qq.com/s/8LxNZ0Hrne_EMZ352jmIXQ)
+
 [从源码中来，到业务中去，React性能优化终极指南](https://mp.weixin.qq.com/s/DswfPb6J1w2B_MWj1TjyOg)
 
 [剖析React核心设计原理—Virtual Dom](https://mp.weixin.qq.com/s/l19wbHNIrhjyD0HwJwuvmQ)
