@@ -522,6 +522,41 @@ export default React.memo(App);
 
 :::
 
+### 3) 声明非 `.ts`、`.tsx` 后缀的模块
+
+当我们在 TypeScript 文件中引用 CSS Modules 变量时，由于 TypeScript 并不知道除了 `.ts` 以及 `.tsx` 文件外的文件内容，为了防止 IDE 在语法检查上报错，我们还需要针对特定文件后缀声明下环境变量。针对 CRA 新建的项目，你可以简单建立一个 `react-app-env.d.ts` 文件来补充上如下说明：
+
+```ts title="react-app-env.d.ts"
+/// <reference types="node" />
+/// <reference types="react" />
+/// <reference types="react-dom" />
+/// <reference types="react-scripts" />
+
+declare module '*.module.css' {
+  const classes: { readonly [key: string]: string };
+  export default classes;
+}
+
+declare module '*.module.scss' {
+  const classes: { readonly [key: string]: string };
+  export default classes;
+}
+
+declare module '*.module.sass' {
+  const classes: { readonly [key: string]: string };
+  export default classes;
+}
+```
+
+:::tip
+
+几点说明：
+
+- 使用三斜线指令导入其他声明文件，可以防止该声明文件变成模块，使得全局声明可以生效
+- CSS 模块导出的是一个对象，编写类型声明需要注意下（其他模块例如图片，经过 Webpack 处理之后导出值会变成文件路径，对应类型就是 `string`）
+
+:::
+
 ## 9. CRA 项目非跟路径部署的正确姿势
 
 项目中需要使用一个子路径部署页面，例如 `/tclient`。此时 HTML 入口文件中所有的资源地址都要改成从 `/tclient` 路径下去访问。
@@ -788,7 +823,11 @@ DISABLE_ESLINT_PLUGIN=true
 
 > https://github.com/AlloyTeam/eslint-config-alloy
 
-## 11. 参考
+## 11. 🚧 其他可选配置
+
+[【第2669期】前端开发中的流程自动化与提效实践](https://mp.weixin.qq.com/s/bRlG5tc244ZVmPdb4mjbGQ)
+
+## 12. 参考
 
 [都 2022 年了，手动搭建 React 开发环境很难吗](https://juejin.cn/post/7087811040591675428)
 
