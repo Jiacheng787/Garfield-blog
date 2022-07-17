@@ -8,6 +8,12 @@ tags: []
 
 <!--truncate-->
 
+## Vite 3.0 正式版发布
+
+[Vite 3.0 发布: 核心更新盘点与分析](https://mp.weixin.qq.com/s/_GuGJaf8Sew5D8JaLQ3qOA)
+
+> https://vitejs.dev/blog/announcing-vite3.html#dev-improvements
+
 ## 为什么用 Vite 打包 React 组件库
 
 - 生产环境 rollup 打包 + 开发环境 devServer
