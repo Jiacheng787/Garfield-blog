@@ -14,7 +14,7 @@
             <guid>搭建业务组件库</guid>
             <pubDate>Sat, 16 Jul 2022 22:58:00 GMT</pubDate>
             <description><![CDATA[为什么搭建业务组件库]]></description>
-            <content:encoded><![CDATA[<p>为什么搭建业务组件库</p><ul><li>跨项目复用</li><li>组件使用文档</li><li>跨团队共建发展</li></ul><p><a href="https://juejin.cn/post/7120893568553582622" target="_blank" rel="noopener noreferrer">快上车！搭建一个属于自己的组件库！</a></p>]]></content:encoded>
+            <content:encoded><![CDATA[<p>为什么搭建业务组件库</p><ul><li>跨项目复用</li><li>组件使用文档</li><li>跨团队共建发展</li></ul><p><a href="https://juejin.cn/post/7120893568553582622" target="_blank" rel="noopener noreferrer">快上车！搭建一个属于自己的组件库！</a></p><p><a href="https://juejin.cn/post/7117886038126624805" target="_blank" rel="noopener noreferrer">使用Vite和TypeScript带你从零打造一个属于自己的Vue3组件库</a></p><p><a href="https://juejin.cn/post/7122114817581645832" target="_blank" rel="noopener noreferrer">Vite 也可以模块联邦</a></p>]]></content:encoded>
         </item>
         <item>
             <title><![CDATA[Webpack5 Module Federaction]]></title>
