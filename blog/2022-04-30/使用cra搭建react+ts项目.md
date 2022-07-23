@@ -343,6 +343,8 @@ CRA 内置了 PostCSS Normalize（相比 normalize.css 增加了根据 browsersl
 
 [2022 年的 React 生态](https://juejin.cn/post/7085542534943883301)
 
+[React 精选组件库清单](https://github.com/brillout/awesome-react-components)
+
 ## 7. 🚧 React 性能优化指南
 
 [如何在React中应用SOLID原则](https://mp.weixin.qq.com/s/8LxNZ0Hrne_EMZ352jmIXQ)
