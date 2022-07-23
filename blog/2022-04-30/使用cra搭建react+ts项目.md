@@ -524,7 +524,26 @@ export default React.memo(App);
 
 :::
 
-### 3) 声明非 `.ts`、`.tsx` 后缀的模块
+### 3) TS 模块路径别名
+
+在 `tsconfig.json` 中添加 alias 配置，否则通过 Webpack alias 导入的模块推导不出类型：
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    // 注意：baseUrl 必选，与 paths 成对出现，以 tsconfig.json 文件所在目录开始
+    "baseUrl": ".", 
+    "paths": {
+      // 映射列表
+      "@/*": [
+        "src/*"
+      ],
+    }
+  }
+}
+```
+
+### 4) 声明非 `.ts`、`.tsx` 后缀的模块
 
 当我们在 TypeScript 文件中引用 CSS Modules 变量时，由于 TypeScript 并不知道除了 `.ts` 以及 `.tsx` 文件外的文件内容，为了防止 IDE 在语法检查上报错，我们还需要针对特定文件后缀声明下环境变量。针对 CRA 新建的项目，你可以简单建立一个 `react-app-env.d.ts` 文件来补充上如下说明：
 
