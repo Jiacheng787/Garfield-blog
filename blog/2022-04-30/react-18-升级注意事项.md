@@ -53,6 +53,10 @@ Antd 最近发布了 4.20.0 版本，增加了对 React18 的支持：
 
 :::
 
+## 4. React 18 新特性
+
+[react18新特性及实践总结](https://juejin.cn/post/7117512204059934733)
+
 ## 参考
 
 [React 18 全览](https://mp.weixin.qq.com/s/t3dYc3Md1dpiv1vaFa5plA)
