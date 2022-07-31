@@ -220,6 +220,33 @@ const App: React.FC<IProps> = ({ displayType }) => {
 
 综上，当我们把组件写成 JSX 标签，会编译为 `React.createElement()` 调用的形式，这实际上就是在挂载组件。在条件渲染场景下，我们需要实现组件延迟挂载，即只在渲染的时候挂载需要的组件。实现组件延迟挂载，最简单的方式就是不用 JSX 标签，例如 `Teach`，此外还可以包裹一层函数实现延迟挂载，例如 `() => <Teach />`，但是要注意，直接 `<Teach />` 这样写是不对的。
 
+## 处理节点下无 `children` 的情况
+
+有些时候某个节点下没有子节点，看到有些同事是这样写的：
+
+```tsx
+<div id="_app"></div>
+
+<Comp></Comp>
+```
+
+但实际上我们知道，JSX 只是一种编译时语法糖（更准确说是一种领域特定语言），在节点下没有子节点的时候，我们可以写成自闭合标签的形式：
+
+```tsx
+<div id="_app" />
+
+<Comp />
+```
+
+我们可以在 Babel Playground 看一下编译后的结果，以上两种编译结果完全等价：
+
+```tsx
+React.createElement("div", { id: "_app" });
+
+React.createElement(Comp, null);
+```
+
+> https://www.babeljs.cn/repl
 
 ## 参考
 
