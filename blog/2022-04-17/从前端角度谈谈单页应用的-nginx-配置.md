@@ -302,16 +302,16 @@ http {
 
 关于负载均衡的策略大致有以下四种种
 
-1. round_robin，轮询
-1. weighted_round_robin，加权轮询
-1. ip_hash
-1. least_conn
+- round_robin，轮询
+- weighted_round_robin，加权轮询
+- ip_hash
+- least_conn
 
-## Round_Robin
+### 1) Round_Robin
 
 轮询，`nginx` 默认的负载均衡策略就是轮询，假设负载三台服务器节点为 A、B、C，则每次流量的负载结果为 ABCABC
 
-## Weighted_Round_Robin
+### 2) Weighted_Round_Robin
 
 加权轮询，根据关键字 weight 配置权重，如下则平均没来四次请求，会有八次打在 A，会有一次打在 B，一次打在 C
 
@@ -323,7 +323,7 @@ upstream backend {
 }
 ```
 
-## IP_hash
+### 3) IP_hash
 
 对每次的 IP 地址进行 Hash，进而选择合适的节点，如此，每次用户的流量请求将会打在固定的服务器上，利于缓存，也更利于 AB 测试等。
 
@@ -336,7 +336,7 @@ upstream backend {
 }
 ```
 
-## Least Connection
+### 3) Least Connection
 
 选择连接数最少的服务器节点优先负载
 
