@@ -336,7 +336,7 @@ upstream backend {
 }
 ```
 
-### 3) Least Connection
+### 4) Least Connection
 
 选择连接数最少的服务器节点优先负载
 
